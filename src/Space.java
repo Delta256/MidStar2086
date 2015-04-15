@@ -21,6 +21,7 @@ public class Space {
         Scanner fin = new Scanner(new FileReader("shiptypes.mid"));
         Scanner sin = new Scanner(System.in);
         Vessel vessel;
+        //Formation formation;
         while (firstrun == 1) {
             String text = fin.nextLine();
 
@@ -47,11 +48,84 @@ public class Space {
             vessel.subweapons = Integer.parseInt(text.split(",")[11]);
             VesselList.add(vessel);
         }
-        
+
+        //print stats
         for (int i = 0; i < VesselList.size(); i++) {
             vessel = VesselList.get(i);
 
             System.out.println(i + "{" + vessel.name + "} Faction:" + "[" + vessel.ORFaction + "]" + " Crew Compliment " + vessel.crewlimit + " Max Velocity(in open space):" + vessel.speed);
+        }
+
+        System.out.println("Create formations?");
+
+        Loop:
+        {
+            while (true) {
+                switch (sin.nextLine()) {
+
+                    case "n":
+                        break Loop;
+
+                    case "y":
+                        Formation formation = new Formation();
+
+                        System.out.println("Set name:");
+                        formation.name = sin.nextLine();
+
+                        System.out.println("Set starting requisition");
+                        formation.requisition = Integer.parseInt(sin.nextLine());
+
+                        formations.add(formation);
+                        System.out.println("Create another team?[y/n]");
+
+                        break;
+                }
+            }
+        }
+
+        System.out.println("Add vessels?");
+
+        Loop:
+        {
+            while (true) {
+                switch (sin.nextLine()) {
+
+                    case "n":
+                        break Loop;
+
+                    case "y":
+
+                        int i;
+
+                        for (i = 0; i < formations.size(); i++) {
+                            Formation formation;
+                            formation = formations.get(i);
+
+                            System.out.println(i + "{" + formation.name + "}");
+                        }
+
+                        System.out.println("Choose formation to add ships to:");
+
+                        i = Integer.parseInt(sin.nextLine());
+
+                        vessel = new Vessel();
+
+                        for (i = 0; i < VesselList.size(); i++) {
+                            vessel = VesselList.get(i);
+
+                            System.out.println(i + "{" + vessel.name + "} Faction:" + "[" + vessel.ORFaction + "]" + " Crew Compliment " + vessel.crewlimit + " Max Velocity(in open space):" + vessel.speed);
+                        }
+
+                        System.out.println("Choose vessel");
+
+                        vessel = VesselList.get(Integer.parseInt(sin.nextLine()));
+
+                        System.out.println("You chose the:");
+                        System.out.println("{" + vessel.name + "} Faction:" + "[" + vessel.ORFaction + "]" + " Crew Compliment " + vessel.crewlimit + " Max Velocity(in open space):" + vessel.speed);
+
+                        break;
+                }
+            }
         }
     }
 }
