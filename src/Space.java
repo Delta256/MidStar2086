@@ -20,6 +20,7 @@ public class Space {
         int firstrun = 1;
         Scanner fin = new Scanner(new FileReader("shiptypes.mid"));
         Scanner sin = new Scanner(System.in);
+
         Vessel vessel;
         //Formation formation;
         while (firstrun == 1) {
@@ -104,11 +105,13 @@ public class Space {
                             System.out.println(i + "{" + formation.name + "}");
                         }
 
-                        System.out.println("Choose formation to add ships to:");
+                        System.out.println("Choose formation to add ship to:");
 
                         i = Integer.parseInt(sin.nextLine());
 
                         vessel = new Vessel();
+
+                        //Print lists of vessels
 
                         for (i = 0; i < VesselList.size(); i++) {
                             vessel = VesselList.get(i);
@@ -122,9 +125,24 @@ public class Space {
 
                         System.out.println("You chose the:");
                         System.out.println("{" + vessel.name + "} Faction:" + "[" + vessel.ORFaction + "]" + " Crew Compliment " + vessel.crewlimit + " Max Velocity(in open space):" + vessel.speed);
-
+                        
+                        Formation.ship.add(vessel);
+                        
                         break;
                 }
+            }
+        }
+        for (int i = 0; i < formations.size(); i++) {
+
+            System.out.print(formations.get(i).name);
+
+
+            for (i = 0; i < formations.get(i).ship.size(); i++) {
+                
+                System.out.println(formations.get(i).ship.vessel.name);
+                
+                
+            
             }
         }
     }
