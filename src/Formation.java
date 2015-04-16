@@ -8,6 +8,6 @@ public class Formation {
     String name;
     int requisition;
     int buildtime;
-    List<Vessel> ship = new ArrayList<>();
+    List<Vessel> ships = new ArrayList<>();
     
 }

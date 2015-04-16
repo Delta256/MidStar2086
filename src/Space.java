@@ -18,11 +18,11 @@ public class Space {
         List<Vessel> VesselList = new ArrayList<>();
 
         int firstrun = 1;
-        Scanner fin = new Scanner(new FileReader("shiptypes.mid"));
+        Scanner fin = new Scanner(new FileReader("shipstypes.mid"));
         Scanner sin = new Scanner(System.in);
-
+        Formation formation;
         Vessel vessel;
-        //Formation formation;
+        
         while (firstrun == 1) {
             String text = fin.nextLine();
 
@@ -68,7 +68,7 @@ public class Space {
                         break Loop;
 
                     case "y":
-                        Formation formation = new Formation();
+                        //Formation formation = new Formation();
 
                         System.out.println("Set name:");
                         formation.name = sin.nextLine();
@@ -99,13 +99,14 @@ public class Space {
                         int i;
 
                         for (i = 0; i < formations.size(); i++) {
-                            Formation formation;
+                            //Formation formation;
+                            
                             formation = formations.get(i);
 
                             System.out.println(i + "{" + formation.name + "}");
                         }
 
-                        System.out.println("Choose formation to add ship to:");
+                        System.out.println("Choose formation to add ships to:");
 
                         i = Integer.parseInt(sin.nextLine());
 
@@ -126,7 +127,7 @@ public class Space {
                         System.out.println("You chose the:");
                         System.out.println("{" + vessel.name + "} Faction:" + "[" + vessel.ORFaction + "]" + " Crew Compliment " + vessel.crewlimit + " Max Velocity(in open space):" + vessel.speed);
                         
-                        Formation.ship.add(vessel);
+                        formation.ships.add(vessel);
                         
                         break;
                 }
@@ -137,9 +138,9 @@ public class Space {
             System.out.print(formations.get(i).name);
 
 
-            for (i = 0; i < formations.get(i).ship.size(); i++) {
+            for (i = 0; i < formations.get(i).ships.size(); i++) {
                 
-                System.out.println(formations.get(i).ship.vessel.name);
+                System.out.println(formations.get(i).ships.vessel(i).name);
                 
                 
             
