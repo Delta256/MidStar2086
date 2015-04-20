@@ -18,7 +18,7 @@ public class Space {
         List<Vessel> VesselList = new ArrayList<>();
 
         int firstrun = 1;
-        Scanner fin = new Scanner(new FileReader("shipstypes.mid"));
+        Scanner fin = new Scanner(new FileReader("shiptypes.mid"));
         Scanner sin = new Scanner(System.in);
         
         Vessel vessel;
@@ -136,7 +136,7 @@ public class Space {
         }
         for (int i = 0; i < formations.size(); i++) {
 
-            System.out.print(formations.get(i).name);
+            System.out.println(formations.get(i).name);
 
 
             for (int j = 0; j < formations.get(i).ships.size(); j++) {
