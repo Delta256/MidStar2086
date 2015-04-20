@@ -20,7 +20,7 @@ public class Space {
         int firstrun = 1;
         Scanner fin = new Scanner(new FileReader("shipstypes.mid"));
         Scanner sin = new Scanner(System.in);
-        Formation formation;
+        
         Vessel vessel;
         
         while (firstrun == 1) {
@@ -68,7 +68,7 @@ public class Space {
                         break Loop;
 
                     case "y":
-                        //Formation formation = new Formation();
+                        Formation  formation = new Formation();
 
                         System.out.println("Set name:");
                         formation.name = sin.nextLine();
@@ -95,11 +95,12 @@ public class Space {
                         break Loop;
 
                     case "y":
+                        Formation  formation = new Formation();
 
                         int i;
 
                         for (i = 0; i < formations.size(); i++) {
-                            //Formation formation;
+                            
                             
                             formation = formations.get(i);
 
@@ -138,9 +139,9 @@ public class Space {
             System.out.print(formations.get(i).name);
 
 
-            for (i = 0; i < formations.get(i).ships.size(); i++) {
+            for (int j = 0; j < formations.get(i).ships.size(); j++) {
                 
-                System.out.println(formations.get(i).ships.vessel(i).name);
+                System.out.println(formations.get(i).ships.get(j).name);
                 
                 
             
