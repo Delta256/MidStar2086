@@ -142,17 +142,33 @@ public class Space {
         }
         for (int i = 0; i < formations.size(); i++) {
 
-            System.out.println(formations.get(i).name);
+            System.out.println("{" + i + "} " +formations.get(i).name);
 
 
             for (int j = 0; j < formations.get(i).ships.size(); j++) {
 
-                System.out.println(formations.get(i).ships.get(j).name + " " + formations.get(i).ships.get(j).hull);
+                System.out.println("{" + j + "} " + formations.get(i).ships.get(j).name + " " + formations.get(i).ships.get(j).hull);
 
 
 
             }
         }
     
+        //Combat sorta.
+        
+        while (true){
+            
+            System.out.println("Choose your formation");
+            
+            int i = Integer.parseInt(sin.nextLine());   
+            formations.get(i).isplayer = true;
+            
+            System.out.println("Choose your ship");
+            
+            i = Integer.parseInt(sin.nextLine());   
+            formations.get(i).ships.get(i).isplayer = true;
+            
+            
+        }    
     }
 }
