@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 //
@@ -16,13 +17,14 @@ public class Space {
 
         List<Formation> formations = new ArrayList<>();
         List<Vessel> VesselList = new ArrayList<>();
+        Random rand = new Random();
 
         int firstrun = 1;
         Scanner fin = new Scanner(new FileReader("shiptypes.mid"));
         Scanner sin = new Scanner(System.in);
-        
+
         Vessel vessel;
-        
+
         while (firstrun == 1) {
             String text = fin.nextLine();
 
@@ -68,7 +70,7 @@ public class Space {
                         break Loop;
 
                     case "y":
-                        Formation  formation = new Formation();
+                        Formation formation = new Formation();
 
                         System.out.println("Set name:");
                         formation.name = sin.nextLine();
@@ -95,13 +97,13 @@ public class Space {
                         break Loop;
 
                     case "y":
-                        Formation  formation = new Formation();
+                        Formation formation;
 
                         int i;
 
                         for (i = 0; i < formations.size(); i++) {
-                            
-                            
+
+
                             formation = formations.get(i);
 
                             System.out.println(i + "{" + formation.name + "}");
@@ -110,6 +112,7 @@ public class Space {
                         System.out.println("Choose formation to add ships to:");
 
                         i = Integer.parseInt(sin.nextLine());
+                        formation = formations.get(i);
 
                         vessel = new Vessel();
 
@@ -125,11 +128,14 @@ public class Space {
 
                         vessel = VesselList.get(Integer.parseInt(sin.nextLine()));
 
-                        System.out.println("You chose the:");
+
                         System.out.println("{" + vessel.name + "} Faction:" + "[" + vessel.ORFaction + "]" + " Crew Compliment " + vessel.crewlimit + " Max Velocity(in open space):" + vessel.speed);
-                        
+                        System.out.println("Has been added to");
+                        System.out.println(formation.name);
+
+
                         formation.ships.add(vessel);
-                        
+
                         break;
                 }
             }
@@ -140,12 +146,13 @@ public class Space {
 
 
             for (int j = 0; j < formations.get(i).ships.size(); j++) {
-                
-                System.out.println(formations.get(i).ships.get(j).name);
-                
-                
-            
+
+                System.out.println(formations.get(i).ships.get(j).name + " " + formations.get(i).ships.get(j).hull);
+
+
+
             }
         }
+    
     }
 }

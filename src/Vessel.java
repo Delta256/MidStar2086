@@ -37,4 +37,5 @@ public class Vessel {
     int power;
     int fields; 
     int speed;    
+    boolean isplayer;
 }
