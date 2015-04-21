@@ -165,8 +165,8 @@ public class Space {
             
             System.out.println("Choose your ship");
             
-            i = Integer.parseInt(sin.nextLine());   
-            formations.get(i).ships.get(i).isplayer = true;
+            int j = Integer.parseInt(sin.nextLine());   
+            formations.get(i).ships.get(j).isplayer = true;
             
             
         }    
