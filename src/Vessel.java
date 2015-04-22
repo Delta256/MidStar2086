@@ -33,6 +33,7 @@ public class Vessel {
     
     //dynaminc traits
     int hull;
+    int crew;
     int marines; 
     int power;
     int fields; 

@@ -142,7 +142,7 @@ public class Space {
         }
         for (int i = 0; i < formations.size(); i++) {
 
-            System.out.println("{" + i + "} " +formations.get(i).name);
+            System.out.println("{" + i + "} " + formations.get(i).name);
 
 
             for (int j = 0; j < formations.get(i).ships.size(); j++) {
@@ -153,22 +153,38 @@ public class Space {
 
             }
         }
-    
+
         //Combat sorta.
-        
-        while (true){
-            
+
+        while (true) {
+
             System.out.println("Choose your formation");
-            
-            int i = Integer.parseInt(sin.nextLine());   
+
+            int i = Integer.parseInt(sin.nextLine());
             formations.get(i).isplayer = true;
-            
+
             System.out.println("Choose your ship");
-            
-            int j = Integer.parseInt(sin.nextLine());   
+
+            int j = Integer.parseInt(sin.nextLine());
             formations.get(i).ships.get(j).isplayer = true;
-            
-            
-        }    
+            Vessel playervessel = formations.get(i).ships.get(j);
+
+            System.out.println("Readying vessel");
+            System.out.println("");
+            System.out.println("SITREP");
+
+            System.out.println(playervessel.name + ":");
+            System.out.println("Faction: " + playervessel.ORFaction);
+            System.out.println("Crewmembers onboard: " + playervessel.crew);
+            System.out.println("Boarding teams: " + playervessel.marines);
+            System.out.println("Structural integrity: " + playervessel.hull + "/" + playervessel.hulllimit);
+            System.out.println("Field integrity: " + playervessel.fields + "/" + playervessel.fieldlimit);
+            System.out.println("Power available" + playervessel.power + "/" + playervessel.powerlimit + " Generating:" + playervessel.powergen);
+
+
+
+
+
+        }
     }
 }
