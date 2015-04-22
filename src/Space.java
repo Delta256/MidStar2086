@@ -174,8 +174,14 @@ public class Space {
         System.out.println("");
 
         while (true) {
-
+            printVessel(playervessel);
             //Sitrep function. Appears at the start of each turn, and at request.
+            
+
+        }
+    }
+    
+    static public void printVessel(Vessel playervessel){
             System.out.println("SITREP");
             System.out.println(playervessel.name + ":");
             System.out.println("Faction: " + playervessel.ORFaction);
@@ -184,7 +190,5 @@ public class Space {
             System.out.println("Structural integrity: " + playervessel.hull + "/" + playervessel.hulllimit);
             System.out.println("Field integrity: " + playervessel.fields + "/" + playervessel.fieldlimit);
             System.out.println("Power available: " + playervessel.power + "/" + playervessel.powerlimit + " Generating:" + playervessel.powergen);
-
-        }
     }
 }
