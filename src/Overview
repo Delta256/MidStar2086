@@ -1,0 +1,16 @@
+Todo:
+
+
+**Mandatory**
+Shove everything into arraylists :Done:
+Allow player control over one (or more if desired) vessel instance(s)
+Combat engine
+AI using random integers to decide actions
+Win/lose states
+Vessel roster complete
+
+[Not so mandatory]
+2D array movement
+Save/Load
+Graphical interface
+Vessel roster balanced
