@@ -53,14 +53,7 @@ public class Space {
             VesselList.add(vessel);
         }
 
-        //print stats
-        for (int i = 0; i < VesselList.size(); i++) {
-            vessel = VesselList.get(i);
-
-            System.out.println(i + "{" + vessel.name + "} Faction:" + "[" + vessel.ORFaction + "]" + " Crew Compliment " + vessel.crewlimit + " Max Velocity(in open space):" + vessel.speed);
-        }
-
-        System.out.println("Create formations?");
+        System.out.println("Create formations? (y/n)");
 
         Loop:
         {
@@ -128,7 +121,7 @@ public class Space {
                         System.out.println("Choose vessel");
 
                         vessel = VesselList.get(Integer.parseInt(sin.nextLine()));
-                        
+
                         //Set starting resources for each ship
                         vessel.crew = vessel.crewlimit;
                         vessel.power = vessel.powerlimit;
@@ -138,8 +131,8 @@ public class Space {
 
 
                         System.out.println("{" + vessel.name + "} Faction:" + "[" + vessel.ORFaction + "]" + " Crew Compliment " + vessel.crewlimit + " Max Velocity(in open space):" + vessel.speed);
-                        System.out.println("Has been added to");
-                        System.out.println(formation.name);
+                        System.out.println("Has been added to " + formation.name);
+
 
 
                         formation.ships.add(vessel);
@@ -155,7 +148,7 @@ public class Space {
 
             for (int j = 0; j < formations.get(i).ships.size(); j++) {
 
-                System.out.println("{" + j + "} " + formations.get(i).ships.get(j).name + " " + formations.get(i).ships.get(j).hull);
+                System.out.println("    " + "{" + j + "} " + formations.get(i).ships.get(j).name + " " + formations.get(i).ships.get(j).hull);
 
 
 
@@ -164,23 +157,26 @@ public class Space {
 
         //Combat sorta.
 
+
+
+        System.out.println("Choose your formation");
+
+        int i = Integer.parseInt(sin.nextLine());
+        formations.get(i).isplayer = true;
+
+        System.out.println("Choose your ship");
+
+        int j = Integer.parseInt(sin.nextLine());
+        formations.get(i).ships.get(j).isplayer = true;
+        Vessel playervessel = formations.get(i).ships.get(j);
+
+        System.out.println("Readying vessel");
+        System.out.println("");
+
         while (true) {
 
-            System.out.println("Choose your formation");
-
-            int i = Integer.parseInt(sin.nextLine());
-            formations.get(i).isplayer = true;
-
-            System.out.println("Choose your ship");
-
-            int j = Integer.parseInt(sin.nextLine());
-            formations.get(i).ships.get(j).isplayer = true;
-            Vessel playervessel = formations.get(i).ships.get(j);
-
-            System.out.println("Readying vessel");
-            System.out.println("");
+            //Sitrep function. Appears at the start of each turn, and at request.
             System.out.println("SITREP");
-
             System.out.println(playervessel.name + ":");
             System.out.println("Faction: " + playervessel.ORFaction);
             System.out.println("Crewmembers onboard: " + playervessel.crew);
@@ -188,10 +184,6 @@ public class Space {
             System.out.println("Structural integrity: " + playervessel.hull + "/" + playervessel.hulllimit);
             System.out.println("Field integrity: " + playervessel.fields + "/" + playervessel.fieldlimit);
             System.out.println("Power available: " + playervessel.power + "/" + playervessel.powerlimit + " Generating:" + playervessel.powergen);
-
-
-
-
 
         }
     }
