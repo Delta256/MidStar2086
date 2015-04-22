@@ -39,7 +39,8 @@ public class Space {
             vessel = new Vessel();
             vessel.name = text.split(",")[0];
             vessel.ORFaction = text.split(",")[1];
-            vessel.hulllimit = Integer.parseInt(text.split(",")[2]);
+            vessel.faction = Integer.parseInt(text.split(",")[2]);
+            vessel.hulllimit = Integer.parseInt(text.split(",")[3]);
             vessel.crewlimit = Integer.parseInt(text.split(",")[4]);
             vessel.marinelimit = Integer.parseInt(text.split(",")[5]);
             vessel.powerlimit = Integer.parseInt(text.split(",")[6]);
@@ -127,6 +128,13 @@ public class Space {
                         System.out.println("Choose vessel");
 
                         vessel = VesselList.get(Integer.parseInt(sin.nextLine()));
+                        
+                        //Set starting resources for each ship
+                        vessel.crew = vessel.crewlimit;
+                        vessel.power = vessel.powerlimit;
+                        vessel.marines = vessel.marinelimit;
+                        vessel.hull = vessel.hulllimit;
+                        vessel.fields = vessel.fieldlimit;
 
 
                         System.out.println("{" + vessel.name + "} Faction:" + "[" + vessel.ORFaction + "]" + " Crew Compliment " + vessel.crewlimit + " Max Velocity(in open space):" + vessel.speed);
@@ -179,7 +187,7 @@ public class Space {
             System.out.println("Boarding teams: " + playervessel.marines);
             System.out.println("Structural integrity: " + playervessel.hull + "/" + playervessel.hulllimit);
             System.out.println("Field integrity: " + playervessel.fields + "/" + playervessel.fieldlimit);
-            System.out.println("Power available" + playervessel.power + "/" + playervessel.powerlimit + " Generating:" + playervessel.powergen);
+            System.out.println("Power available: " + playervessel.power + "/" + playervessel.powerlimit + " Generating:" + playervessel.powergen);
 
 
 
