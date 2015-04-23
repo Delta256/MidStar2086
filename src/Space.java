@@ -172,20 +172,40 @@ public class Space {
         System.out.println("");
 
         while (true) { //turnloop, goes through all ships.
-            
+
             while (true) { //Player control.
-        
 
                 System.out.println("Input Commands:");
                 System.out.println("");
-                System.out.println("[1]=Status report");
+                System.out.println("[1] Status report");
+                System.out.println("[2] Hostile actions");
+                System.out.println("[3] Scanners");
+                System.out.println("[4] Requisition command");
+                System.out.println("[5] Kill command (3 mana)");
 
                 playerchoice = Integer.parseInt(sin.nextLine());
 
 
-                if (playerchoice == 1) {
+                if (playerchoice == 1) { //Status report
 
                     printVessel(playervessel);
+
+                }
+                if (playerchoice == 2) { //Attack command
+
+                    System.out.println("");
+
+                }
+                if (playerchoice == 3) { //Scan command
+
+                    printVessel(playervessel);
+
+                }
+
+                if (playerchoice == 4) { //Build command
+
+                    printVessel(playervessel);
+
                 }
             }
         }
@@ -200,5 +220,11 @@ public class Space {
         System.out.println("Structural integrity: " + playervessel.hull + "/" + playervessel.hulllimit);
         System.out.println("Field integrity: " + playervessel.fields + "/" + playervessel.fieldlimit);
         System.out.println("Power available: " + playervessel.power + "/" + playervessel.powerlimit + " Generating:" + playervessel.powergen);
+        System.out.println("Resources available: " + playervessel.requisition);
+    }
+
+    public static void playerattack(Vessel playervessel) {
+    
+    
     }
 }
