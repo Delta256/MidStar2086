@@ -193,7 +193,7 @@ public class Space {
                 }
                 if (playerchoice == 2) { //Attack command
 
-                    System.out.println("");
+                    attack(playervessel);
 
                 }
                 if (playerchoice == 3) { //Scan command
@@ -223,8 +223,14 @@ public class Space {
         System.out.println("Resources available: " + playervessel.requisition);
     }
 
-    public static void playerattack(Vessel playervessel) {
-    
-    
+    public static void attack(Vessel playervessel) {
+
+        if (playervessel.isplayer = true) {
+        
+        } 
+        
+        else {
+        
+        }
     }
 }
