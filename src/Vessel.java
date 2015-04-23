@@ -29,9 +29,13 @@ public class Vessel {
     int rails;    
     int subweapons;
     
+    
+    
 
     
     //dynaminc traits
+    int currentformation;
+    int requisition = -1;
     int hull;
     int crew;
     int marines; 

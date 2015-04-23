@@ -70,9 +70,6 @@ public class Space {
                         System.out.println("Set name:");
                         formation.name = sin.nextLine();
 
-                        System.out.println("Set starting requisition");
-                        formation.requisition = Integer.parseInt(sin.nextLine());
-
                         formations.add(formation);
                         System.out.println("Create another team?[y/n]");
 
@@ -129,6 +126,7 @@ public class Space {
                         vessel.marines = vessel.marinelimit;
                         vessel.hull = vessel.hulllimit;
                         vessel.fields = vessel.fieldlimit;
+                        vessel.currentformation = i;
 
 
                         System.out.println("{" + vessel.name + "} Faction:" + "[" + vessel.ORFaction + "]" + " Crew Compliment " + vessel.crewlimit + " Max Velocity(in open space):" + vessel.speed);
@@ -188,8 +186,6 @@ public class Space {
                 if (playerchoice == 1) {
 
                     printVessel(playervessel);
-
-
                 }
             }
         }
