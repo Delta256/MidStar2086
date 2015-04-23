@@ -20,6 +20,7 @@ public class Space {
         Random rand = new Random();
 
         int firstrun = 1;
+        int playerchoice = 0;
         Scanner fin = new Scanner(new FileReader("shiptypes.mid"));
         Scanner sin = new Scanner(System.in);
 
@@ -155,9 +156,8 @@ public class Space {
             }
         }
 
-        //Combat sorta.
-
-
+        //Vessel select
+        //Will be used later to define player-controlled ships for psudo-multiplayer.
 
         System.out.println("Choose your formation");
 
@@ -173,22 +173,36 @@ public class Space {
         System.out.println("Readying vessel");
         System.out.println("");
 
-        while (true) {
-            printVessel(playervessel);
-            //Sitrep function. Appears at the start of each turn, and at request.
+        while (true) { //turnloop, goes through all ships.
             
+            while (true) { //Player control.
+        
 
+                System.out.println("Input Commands:");
+                System.out.println("");
+                System.out.println("[1]=Status report");
+
+                playerchoice = Integer.parseInt(sin.nextLine());
+
+
+                if (playerchoice == 1) {
+
+                    printVessel(playervessel);
+
+
+                }
+            }
         }
     }
-    
-    static public void printVessel(Vessel playervessel){
-            System.out.println("SITREP");
-            System.out.println(playervessel.name + ":");
-            System.out.println("Faction: " + playervessel.ORFaction);
-            System.out.println("Crewmembers onboard: " + playervessel.crew);
-            System.out.println("Boarding teams: " + playervessel.marines);
-            System.out.println("Structural integrity: " + playervessel.hull + "/" + playervessel.hulllimit);
-            System.out.println("Field integrity: " + playervessel.fields + "/" + playervessel.fieldlimit);
-            System.out.println("Power available: " + playervessel.power + "/" + playervessel.powerlimit + " Generating:" + playervessel.powergen);
+
+    public static void printVessel(Vessel playervessel) {
+        System.out.println("SITREP");
+        System.out.println(playervessel.name + ":");
+        System.out.println("Faction: " + playervessel.ORFaction);
+        System.out.println("Crewmembers onboard: " + playervessel.crew);
+        System.out.println("Boarding teams: " + playervessel.marines);
+        System.out.println("Structural integrity: " + playervessel.hull + "/" + playervessel.hulllimit);
+        System.out.println("Field integrity: " + playervessel.fields + "/" + playervessel.fieldlimit);
+        System.out.println("Power available: " + playervessel.power + "/" + playervessel.powerlimit + " Generating:" + playervessel.powergen);
     }
 }
