@@ -147,7 +147,7 @@ public class Space {
 
             for (int j = 0; j < formations.get(i).ships.size(); j++) {
 
-                System.out.println("    " + "{" + j + "} " + formations.get(i).ships.get(j).name + " " + formations.get(i).ships.get(j).hull);
+                System.out.println("    " + "{" + j + "} " + formations.get(i).ships.get(j).name);
 
 
 
@@ -216,7 +216,7 @@ public class Space {
         }
     }
 
-    public static void printvessels(List<Formation> formations) {
+    public static void printvessels(List<Formation> formations, List<Vessel> ships) {
         
         Scanner sin = new Scanner(System.in); //urgh
         
@@ -225,7 +225,7 @@ public class Space {
         
             for (int j = 0; j < formations.get(i).ships.size(); j++) {
 
-            System.out.println("    " + "{" + j + "} " + formations.get(i).ships.get(j).name + " " + formations.get(i).ships.get(j).hull);
+            System.out.println("    " + "{" + j + "} " + formations.get(i).ships.get(j).name);
 
         }
     }
