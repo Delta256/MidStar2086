@@ -193,6 +193,11 @@ public class Space {
                 }
                 if (playerchoice == 2) { //Attack command
 
+                    printformations(formations);
+                    i = Integer.parseInt(sin.nextLine());
+                    j = Integer.parseInt(sin.nextLine());
+
+                    Vessel taregtvessel = formations.get(i).ships.get(j);
                     attack(playervessel);
 
                 }
@@ -208,6 +213,29 @@ public class Space {
 
                 }
             }
+        }
+    }
+
+    public static void printvessels(List<Formation> formations) {
+        
+        Scanner sin = new Scanner(System.in); //urgh
+        
+        System.out.println("Choose formation to view ships from.");
+        int i = Integer.parseInt(sin.nextLine());
+        
+            for (int j = 0; j < formations.get(i).ships.size(); j++) {
+
+            System.out.println("    " + "{" + j + "} " + formations.get(i).ships.get(j).name + " " + formations.get(i).ships.get(j).hull);
+
+        }
+    }
+
+    public static void printformations(List<Formation> formations) {
+
+       for (int i = 0; i < formations.size(); i++) {
+
+            System.out.println("{" + i + "} " + formations.get(i).name);
+
         }
     }
 
@@ -230,7 +258,6 @@ public class Space {
         } 
         
         else {
-        
         }
     }
 }
