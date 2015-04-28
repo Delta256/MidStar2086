@@ -21,7 +21,7 @@ public class Space {
 
 
         int firstrun = 1;
-        int playerchoice = 0;
+        int playerchoice;
         Scanner fin = new Scanner(new FileReader("shiptypes.mid"));
         Scanner sin = new Scanner(System.in);
 
@@ -31,7 +31,7 @@ public class Space {
             String text = fin.nextLine();
 
             if (text.equals(".")) { //Break loop when EoF is reached
-                firstrun = 0;
+                //firstrun = 0;
                 break;
             }
 
@@ -192,7 +192,7 @@ public class Space {
                 }
                 if (playerchoice == 2) { //Attack command
 
-                    //listFNA(formations);
+                    //listFNV(formations);
                     printformations(formations);
                     i = Integer.parseInt(sin.nextLine());
                     printvessels(formations.get(i));
@@ -200,8 +200,8 @@ public class Space {
 
                     Vessel targetvessel = formations.get(i).ships.get(j);
                     attack(playervessel, targetvessel);
-                    
-                    
+
+
                     System.out.println("Press Enter to continue");// End turn
                     if (sin.nextLine() != null) {
                         break;
@@ -224,7 +224,7 @@ public class Space {
         }
     }
 
-    public static void listFNA(List<Formation> formations) {
+    public static void listFNV(List<Formation> formations) {
 
         for (int i = 0; i < formations.size(); i++) {
 
@@ -280,14 +280,14 @@ public class Space {
             //Docter FLAVE text.
             if (playervessel.faction == 1) { //Earth forces
 
-                System.out.println("[1] Particle beamguns" + "(" + playervessel.beams + ")");
+                System.out.println("[1] Beamgun turrets" + "(" + playervessel.beams + ")");
                 System.out.println("[2] Railguns" + "(" + playervessel.rails + ")");
                 System.out.println("[3] Torpedoes" + "(" + playervessel.subweapons + ")");
             } else if (playervessel.faction == 2) { //Midyian Sovereignty
 
                 System.out.println("[1] Phase Cannons" + "(" + playervessel.beams + ")");
-                System.out.println("[2] Phaserail Hardpoints" + "(" + playervessel.rails + ")");
-                System.out.println("[3] Beamgun Projector" + "(" + playervessel.subweapons + ")");
+                System.out.println("[2] Phaserail Turrets" + "(" + playervessel.rails + ")");
+                System.out.println("[3] Beamgun Coil" + "(" + playervessel.subweapons + ")");
             } else if (playervessel.faction == 3) { //Midyian Conglomerate
 
                 System.out.println("[1] Pulse Hardpoints" + "(" + playervessel.beams + ")");
@@ -319,7 +319,7 @@ public class Space {
 
             }
 
-        } else {
+        } else { // TODO AI actions
         }
     }
 }
