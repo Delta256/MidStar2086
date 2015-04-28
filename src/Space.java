@@ -200,6 +200,13 @@ public class Space {
 
                     Vessel targetvessel = formations.get(i).ships.get(j);
                     attack(playervessel, targetvessel);
+                    
+                    
+                    System.out.println("Press Enter to continue");// End turn
+                    if (sin.nextLine() != null) {
+                        break;
+                    }
+
 
                 }
                 if (playerchoice == 3) { //Scan command
@@ -240,7 +247,7 @@ public class Space {
 
         }
     }
-    
+
     public static void printvessels(Formation formation) {
 
         for (int i = 0; i < formation.ships.size(); i++) {
