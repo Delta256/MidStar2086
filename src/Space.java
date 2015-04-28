@@ -192,11 +192,10 @@ public class Space {
                 }
                 if (playerchoice == 2) { //Attack command
 
+                    //listFNA(formations);
                     printformations(formations);
-
-                    listvessels(formations);
-
                     i = Integer.parseInt(sin.nextLine());
+                    printvessels(formations.get(i));
                     j = Integer.parseInt(sin.nextLine());
 
                     Vessel targetvessel = formations.get(i).ships.get(j);
@@ -218,20 +217,19 @@ public class Space {
         }
     }
 
-    public static int listvessels(List<Formation> formations) {
+    public static void listFNA(List<Formation> formations) {
 
-        Scanner sin = new Scanner(System.in);
+        for (int i = 0; i < formations.size(); i++) {
 
-        System.out.println("Choose formation to view ships from.");
-        int ii = Integer.parseInt(sin.nextLine());
+            System.out.println("{" + i + "} " + formations.get(i).name);
 
-        for (int j = 0; j < formations.get(ii).ships.size(); j++) {
 
-            System.out.println("{" + j + "} " + formations.get(ii).ships.get(j).name);
+            for (int j = 0; j < formations.get(i).ships.size(); j++) {
 
+                System.out.println("    " + "{" + j + "} " + formations.get(i).ships.get(j).name);
+
+            }
         }
-        return ii;
-
     }
 
     public static void printformations(List<Formation> formations) {
@@ -239,6 +237,15 @@ public class Space {
         for (int i = 0; i < formations.size(); i++) {
 
             System.out.println("{" + i + "} " + formations.get(i).name);
+
+        }
+    }
+    
+    public static void printvessels(Formation formation) {
+
+        for (int i = 0; i < formation.ships.size(); i++) {
+
+            System.out.println("{" + i + "} " + formation.ships.get(i).name);
 
         }
     }
@@ -257,7 +264,7 @@ public class Space {
 
     public static void attack(Vessel playervessel, Vessel targetvessel) {
         Scanner sin = new Scanner(System.in);
-        int playerchoice; 
+        int playerchoice;
 
         if (playervessel.isplayer = true) {
 
@@ -280,9 +287,9 @@ public class Space {
                 System.out.println("[2] Mass Cannons" + "(" + playervessel.rails + ")");
                 System.out.println("[3] Rocket arrays" + "(" + playervessel.subweapons + ")");
             }
-            
+
             playerchoice = Integer.parseInt(sin.nextLine());
-            
+
             if (playerchoice == 1) {
 
                 System.out.println(targetvessel.hull);
