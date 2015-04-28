@@ -19,6 +19,7 @@ public class Space {
         List<Vessel> VesselList = new ArrayList<>();
         Random rand = new Random();
 
+
         int firstrun = 1;
         int playerchoice = 0;
         Scanner fin = new Scanner(new FileReader("shiptypes.mid"));
@@ -48,9 +49,9 @@ public class Space {
             vessel.powergen = Integer.parseInt(text.split(",")[7]);
             vessel.fieldlimit = Integer.parseInt(text.split(",")[8]);
             vessel.speed = Integer.parseInt(text.split(",")[9]);
-            vessel.beams = Integer.parseInt(text.split(",")[9]);
-            vessel.rails = Integer.parseInt(text.split(",")[10]);
-            vessel.subweapons = Integer.parseInt(text.split(",")[11]);
+            vessel.beams = Integer.parseInt(text.split(",")[10]);
+            vessel.rails = Integer.parseInt(text.split(",")[11]);
+            vessel.subweapons = Integer.parseInt(text.split(",")[12]);
             VesselList.add(vessel);
         }
 
@@ -105,8 +106,6 @@ public class Space {
 
                         i = Integer.parseInt(sin.nextLine());
                         formation = formations.get(i);
-
-                        vessel = new Vessel();
 
                         //Print lists of vessels
 
@@ -194,7 +193,9 @@ public class Space {
                 if (playerchoice == 2) { //Attack command
 
                     printformations(formations);
-                    printvessels(formations);
+
+                    listvessels(formations);
+
                     i = Integer.parseInt(sin.nextLine());
                     j = Integer.parseInt(sin.nextLine());
 
@@ -217,18 +218,20 @@ public class Space {
         }
     }
 
-    public static void printvessels(List<Formation> formations) {
+    public static int listvessels(List<Formation> formations) {
 
-        Scanner sin = new Scanner(System.in); //urgh
+        Scanner sin = new Scanner(System.in);
 
         System.out.println("Choose formation to view ships from.");
-        int i = Integer.parseInt(sin.nextLine());
+        int ii = Integer.parseInt(sin.nextLine());
 
-        for (int j = 0; j < formations.get(i).ships.size(); j++) {
+        for (int j = 0; j < formations.get(ii).ships.size(); j++) {
 
-            System.out.println("    " + "{" + j + "} " + formations.get(i).ships.get(j).name);
+            System.out.println("{" + j + "} " + formations.get(ii).ships.get(j).name);
 
         }
+        return ii;
+
     }
 
     public static void printformations(List<Formation> formations) {
@@ -253,6 +256,8 @@ public class Space {
     }
 
     public static void attack(Vessel playervessel, Vessel targetvessel) {
+        Scanner sin = new Scanner(System.in);
+        int playerchoice; 
 
         if (playervessel.isplayer = true) {
 
@@ -264,26 +269,43 @@ public class Space {
                 System.out.println("[1] Particle beamguns" + "(" + playervessel.beams + ")");
                 System.out.println("[2] Railguns" + "(" + playervessel.rails + ")");
                 System.out.println("[3] Torpedoes" + "(" + playervessel.subweapons + ")");
-            }
-            else if (playervessel.faction == 2) { //Midyian Sovereignty
+            } else if (playervessel.faction == 2) { //Midyian Sovereignty
 
                 System.out.println("[1] Phase Cannons" + "(" + playervessel.beams + ")");
-                System.out.println("[2] Phaserail guns" + "(" + playervessel.rails + ")");
+                System.out.println("[2] Phaserail Hardpoints" + "(" + playervessel.rails + ")");
                 System.out.println("[3] Beamgun Projector" + "(" + playervessel.subweapons + ")");
-            }
-            else if (playervessel.faction == 3) { //Midyian Conglomerate
+            } else if (playervessel.faction == 3) { //Midyian Conglomerate
 
                 System.out.println("[1] Pulse Hardpoints" + "(" + playervessel.beams + ")");
                 System.out.println("[2] Mass Cannons" + "(" + playervessel.rails + ")");
                 System.out.println("[3] Rocket arrays" + "(" + playervessel.subweapons + ")");
             }
             
-         
-        
-        
-        } 
-        
-        else {
+            playerchoice = Integer.parseInt(sin.nextLine());
+            
+            if (playerchoice == 1) {
+
+                System.out.println(targetvessel.hull);
+                targetvessel.hull = targetvessel.hull - playervessel.beams;
+                System.out.println(targetvessel.hull);
+
+            }
+            if (playerchoice == 2) {
+
+                System.out.println(targetvessel.hull);
+                targetvessel.hull = targetvessel.hull - playervessel.rails;
+                System.out.println(targetvessel.hull);
+
+            }
+            if (playerchoice == 3) {
+
+                System.out.println(targetvessel.hull);
+                targetvessel.hull = targetvessel.hull - playervessel.subweapons;
+                System.out.println(targetvessel.hull);
+
+            }
+
+        } else {
         }
     }
 }
