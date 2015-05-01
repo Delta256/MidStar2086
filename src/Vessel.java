@@ -43,4 +43,5 @@ public class Vessel {
     int fields; 
     int speed;    
     boolean isplayer;
+    boolean isdead;
 }

@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-//
 public class Space {
 
     /**
@@ -18,7 +17,6 @@ public class Space {
         List<Formation> formations = new ArrayList<>();
         List<Vessel> VesselList = new ArrayList<>();
         Random rand = new Random();
-
 
         int firstrun = 1;
         int playerchoice;
@@ -31,7 +29,7 @@ public class Space {
             String text = fin.nextLine();
 
             if (text.equals(".")) { //Break loop when EoF is reached
-                //firstrun = 0;
+                firstrun = 0;
                 break;
             }
 
@@ -110,6 +108,7 @@ public class Space {
                         //Print lists of vessels
 
                         for (i = 0; i < VesselList.size(); i++) {
+
                             vessel = VesselList.get(i);
 
                             System.out.println(i + "{" + vessel.name + "} Faction:" + "[" + vessel.ORFaction + "]" + " Crew Compliment " + vessel.crewlimit + " Max Velocity(in open space):" + vessel.speed);
@@ -117,23 +116,25 @@ public class Space {
 
                         System.out.println("Choose vessel");
 
-                        vessel = VesselList.get(Integer.parseInt(sin.nextLine()));
+                        Vessel vesselTBA = new Vessel();
+                        vesselTBA = VesselList.get(Integer.parseInt(sin.nextLine()));
 
                         //Set starting resources for each ship
-                        vessel.crew = vessel.crewlimit;
-                        vessel.power = vessel.powerlimit;
-                        vessel.marines = vessel.marinelimit;
-                        vessel.hull = vessel.hulllimit;
-                        vessel.fields = vessel.fieldlimit;
-                        vessel.currentformation = i;
+                        
+                        //HERE LIES THE ISSUE!!@!1! I AM OF MASTER DEBUG!
+                        vesselTBA.crew = vesselTBA.crewlimit;
+                        vesselTBA.power = vesselTBA.powerlimit;
+                        vesselTBA.marines = vesselTBA.marinelimit;
+                        vesselTBA.hull = vesselTBA.hulllimit;
+                        vesselTBA.fields = vesselTBA.fieldlimit;
+                        vesselTBA.currentformation = i;
+                        vesselTBA.isdead = false;
 
 
-                        System.out.println("{" + vessel.name + "} Faction:" + "[" + vessel.ORFaction + "]" + " Crew Compliment " + vessel.crewlimit + " Max Velocity(in open space):" + vessel.speed);
+                        System.out.println("{" + vesselTBA.name + "} Faction:" + "[" + vesselTBA.ORFaction + "]" + " Crew Compliment " + vesselTBA.crewlimit + " Max Velocity(in open space):" + vesselTBA.speed);
                         System.out.println("Has been added to " + formation.name);
 
-
-
-                        formation.ships.add(vessel);
+                        formation.ships.add(vesselTBA);
 
                         break;
                 }
@@ -159,7 +160,7 @@ public class Space {
         System.out.println("Choose your formation");
 
         int i = Integer.parseInt(sin.nextLine());
-        formations.get(i).isplayer = true;
+
 
         System.out.println("Choose your ship");
 
@@ -178,9 +179,6 @@ public class Space {
                 System.out.println("");
                 System.out.println("[1] Status report");
                 System.out.println("[2] Hostile actions");
-                System.out.println("[3] Scanners");
-                System.out.println("[4] Requisition command");
-                System.out.println("[5] Kill command (3 mana)");
 
                 playerchoice = Integer.parseInt(sin.nextLine());
 
@@ -188,17 +186,21 @@ public class Space {
                 if (playerchoice == 1) { //Status report
 
                     printVessel(playervessel);
+                    for (i = 0; i < VesselList.size(); i++) {
+                        vessel = VesselList.get(i);
+                        System.out.println(i + "{" + vessel.name + "}" + vessel.fields + "/" + vessel.fieldlimit);
+                    }
 
                 }
                 if (playerchoice == 2) { //Attack command
 
-                    //listFNV(formations);
                     printformations(formations);
                     i = Integer.parseInt(sin.nextLine());
                     printvessels(formations.get(i));
                     j = Integer.parseInt(sin.nextLine());
 
-                    Vessel targetvessel = formations.get(i).ships.get(j);
+                    Vessel targetvessel;
+                    targetvessel = formations.get(i).ships.get(j);
                     attack(playervessel, targetvessel);
 
 
@@ -206,19 +208,6 @@ public class Space {
                     if (sin.nextLine() != null) {
                         break;
                     }
-
-
-                }
-                if (playerchoice == 3) { //Scan command
-
-                    printVessel(playervessel);
-
-                }
-
-                if (playerchoice == 4) { //Build command
-
-                    printVessel(playervessel);
-
                 }
             }
         }
@@ -272,12 +261,14 @@ public class Space {
     public static void attack(Vessel playervessel, Vessel targetvessel) {
         Scanner sin = new Scanner(System.in);
         int playerchoice;
+        int dmg;
+        Random rand = new Random();
 
         if (playervessel.isplayer = true) {
 
             System.out.println("Attack " + targetvessel.name + " with");
 
-            //Docter FLAVE text.
+            //Flavour text
             if (playervessel.faction == 1) { //Earth forces
 
                 System.out.println("[1] Beamgun turrets" + "(" + playervessel.beams + ")");
@@ -299,11 +290,49 @@ public class Space {
 
             if (playerchoice == 1) {
 
-                System.out.println(targetvessel.hull);
-                targetvessel.hull = targetvessel.hull - playervessel.beams;
-                System.out.println(targetvessel.hull);
+                //Damage Calc
+                int base = playervessel.beams * 50;
+                int percent = (int) (base * 0.25);
+                double randplusminus = (1 - (rand.nextDouble() * 2)); //Determines whether damage will be + or - 25% of base
+                dmg = base + (int) (percent * randplusminus);
 
+                System.out.println("Damage: " + dmg);
+
+
+                if (targetvessel.fields <= dmg) {
+
+                    System.out.println(targetvessel.fields);
+                    dmg = dmg - targetvessel.fields;
+                    System.out.println("Damage Remaining: " + dmg);
+                    targetvessel.fields = 0;
+
+                    if (targetvessel.hull <= dmg) { //checks if ship is killable
+
+                        dmg = 0;
+                        targetvessel.hull = 0;
+                        targetvessel.isdead = true;
+                        System.out.println("Got 'em!");
+
+                    } else if (targetvessel.hull >= dmg) { //checks if ship is killable
+
+                        System.out.println(targetvessel.hull);
+                        targetvessel.hull = targetvessel.hull - dmg;
+                        System.out.println(targetvessel.hull);
+
+                        System.out.println("We've hit their hull.");
+
+                    }
+                } else if (targetvessel.fields >= dmg) { //Does shield damage
+
+                    System.out.println(targetvessel.fields);
+                    targetvessel.fields = targetvessel.fields - dmg;
+                    System.out.println(targetvessel.fields);
+
+                    System.out.println("We've hit their energy barriers.");
+
+                }
             }
+
             if (playerchoice == 2) {
 
                 System.out.println(targetvessel.hull);
