@@ -29,8 +29,10 @@ public class Space {
             String text = fin.nextLine();
 
             if (text.equals(".")) { //Break loop when EoF is reached
-                firstrun = 0;
-                break;
+
+                firstrun = 0; //Stops the game from trying to load vessels 
+                break;        //after is has done so already
+
             }
 
             //Tear stats from Tankdefs
@@ -116,25 +118,27 @@ public class Space {
 
                         System.out.println("Choose vessel");
 
-                        Vessel vesselTBA = new Vessel();
+                        Vessel vesselTBA;
                         vesselTBA = VesselList.get(Integer.parseInt(sin.nextLine()));
 
                         //Set starting resources for each ship
-                        
+
                         //HERE LIES THE ISSUE!!@!1! I AM OF MASTER DEBUG!
-                        vesselTBA.crew = vesselTBA.crewlimit;
-                        vesselTBA.power = vesselTBA.powerlimit;
-                        vesselTBA.marines = vesselTBA.marinelimit;
-                        vesselTBA.hull = vesselTBA.hulllimit;
-                        vesselTBA.fields = vesselTBA.fieldlimit;
-                        vesselTBA.currentformation = i;
-                        vesselTBA.isdead = false;
+                        //int n = vesselTBA.fieldlimit;
+                        //vesselTBA.crew = vesselTBA.crewlimit;
+                        //vesselTBA.power = vesselTBA.powerlimit;
+                        //vesselTBA.marines = vesselTBA.marinelimit;
+                        //vesselTBA.hull = vesselTBA.hulllimit;
+                        //vesselTBA.fields = 256+i;
+                        //vesselTBA.currentformation = i;
+                        //vesselTBA.isdead = false;
 
 
                         System.out.println("{" + vesselTBA.name + "} Faction:" + "[" + vesselTBA.ORFaction + "]" + " Crew Compliment " + vesselTBA.crewlimit + " Max Velocity(in open space):" + vesselTBA.speed);
                         System.out.println("Has been added to " + formation.name);
-
-                        formation.ships.add(vesselTBA);
+                        Vessel Joe = new Vessel();
+                        Joe = vesselTBA;
+                        formation.ships.add(Joe);
 
                         break;
                 }
@@ -149,8 +153,6 @@ public class Space {
 
                 System.out.println("    " + "{" + j + "} " + formations.get(i).ships.get(j).name);
 
-
-
             }
         }
 
@@ -158,12 +160,9 @@ public class Space {
         //Will be used later to define player-controlled ships for psudo-multiplayer.
 
         System.out.println("Choose your formation");
-
         int i = Integer.parseInt(sin.nextLine());
 
-
         System.out.println("Choose your ship");
-
         int j = Integer.parseInt(sin.nextLine());
         formations.get(i).ships.get(j).isplayer = true;
         Vessel playervessel = formations.get(i).ships.get(j);
@@ -174,7 +173,6 @@ public class Space {
         while (true) { //turnloop, goes through all ships.
 
             while (true) { //Player control.
-
                 System.out.println("Input Commands:");
                 System.out.println("");
                 System.out.println("[1] Status report");
@@ -188,7 +186,7 @@ public class Space {
                     printVessel(playervessel);
                     for (i = 0; i < VesselList.size(); i++) {
                         vessel = VesselList.get(i);
-                        System.out.println(i + "{" + vessel.name + "}" + vessel.fields + "/" + vessel.fieldlimit);
+                        System.out.println(i + " " + vessel.name + "}" + vessel.fields + "/" + vessel.fieldlimit);
                     }
 
                 }
@@ -255,6 +253,7 @@ public class Space {
         System.out.println("Structural integrity: " + playervessel.hull + "/" + playervessel.hulllimit);
         System.out.println("Field integrity: " + playervessel.fields + "/" + playervessel.fieldlimit);
         System.out.println("Power available: " + playervessel.power + "/" + playervessel.powerlimit + " Generating:" + playervessel.powergen);
+        System.out.println(playervessel.currentformation);
         System.out.println("Resources available: " + playervessel.requisition);
     }
 
