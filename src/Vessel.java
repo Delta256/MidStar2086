@@ -28,6 +28,7 @@ public class Vessel {
     int beams;
     int rails;    
     int subweapons;
+    int cost;
     
     
     
@@ -69,6 +70,7 @@ public class Vessel {
         vessel.requisition = requisition;
         vessel.speed = speed;
         vessel.subweapons = subweapons;
+        vessel.cost = cost;
         
                 
         

@@ -52,6 +52,7 @@ public class Space {
             vessel.beams = Integer.parseInt(text.split(",")[10]);
             vessel.rails = Integer.parseInt(text.split(",")[11]);
             vessel.subweapons = Integer.parseInt(text.split(",")[12]);
+            vessel.cost = Integer.parseInt(text.split(",")[13]);
             VesselList.add(vessel);
         }
 
@@ -125,7 +126,6 @@ public class Space {
 
                         //Set starting resources for each ship
 
-                        //HERE LIES THE ISSUE!!@!1! I AM OF MASTER DEBUG!
                         vesselTBA.crew = vesselTBA.crewlimit;
                         vesselTBA.power = vesselTBA.powerlimit;
                         vesselTBA.marines = vesselTBA.marinelimit;
@@ -136,9 +136,9 @@ public class Space {
 
 
 
-                        System.out.println("{" + vesselTBA.name + "} " + vesselTBA.fields);
-                        System.out.print(" Has been added to " + formation.name);
+                        System.out.println("{" + vesselTBA.name + "}" + " Has been added to " + formation.name);
                         formation.ships.add(vesselTBA);
+                        System.out.println(" Add more ships? (y/n)");
 
                         break;
                 }
@@ -151,7 +151,7 @@ public class Space {
 
             for (int j = 0; j < formations.get(i).ships.size(); j++) {
 
-                System.out.println("    " + "{" + j + "} " + formations.get(i).ships.get(j).name + " " + formations.get(i).ships.get(j).fields);
+                System.out.println("    " + "{" + j + "} " + formations.get(i).ships.get(j).name);
 
             }
         }
@@ -188,8 +188,10 @@ public class Space {
                 if (playerchoice == 2) { //Attack command
 
                     printformations(formations);
+                    System.out.println("Choose target formation");
                     i = Integer.parseInt(sin.nextLine());
                     printvessels(formations.get(i));
+                    System.out.println("Choose target ship");
                     j = Integer.parseInt(sin.nextLine());
 
                     Vessel targetvessel;
@@ -250,6 +252,7 @@ public class Space {
         System.out.println("Power available: " + playervessel.power + "/" + playervessel.powerlimit + " Generating:" + playervessel.powergen);
         System.out.println(playervessel.currentformation);
         System.out.println("Resources available: " + playervessel.requisition);
+        System.out.println("");
     }
 
     public static void attack(Vessel playervessel, Vessel targetvessel) {
@@ -282,7 +285,7 @@ public class Space {
 
             playerchoice = Integer.parseInt(sin.nextLine());
 
-            if (playerchoice == 1) {
+            if (playerchoice == 1) {//Beams are consistant, and do bonus vs. hull.
 
                 //Damage Calc
                 int base = playervessel.beams * 50;
@@ -293,7 +296,7 @@ public class Space {
                 System.out.println("Damage: " + dmg);
 
 
-                if (targetvessel.fields <= dmg) {
+                if (targetvessel.fields <= dmg) {//Checks if shields can be brought down
 
                     System.out.println(targetvessel.fields);
                     dmg = dmg - targetvessel.fields;
@@ -307,10 +310,10 @@ public class Space {
                         targetvessel.isdead = true;
                         System.out.println("Got 'em!");
 
-                    } else if (targetvessel.hull >= dmg) { //checks if ship is killable
+                    } else if (targetvessel.hull >= dmg) { //Damages hull
 
                         System.out.println(targetvessel.hull);
-                        targetvessel.hull = targetvessel.hull - dmg;
+                        targetvessel.hull = (int) (targetvessel.hull - (dmg*1.10));
                         System.out.println(targetvessel.hull);
 
                         System.out.println("We've hit their hull.");
@@ -327,12 +330,12 @@ public class Space {
                 }
             }
 
-            if (playerchoice == 2) {
+            if (playerchoice == 2) {//Railguns cost less to fire, but are more unpredictable.
 
                 //Damage Calc
-                int base = playervessel.rails * 25;
+                int base = playervessel.rails * 40;
                 int percent = (int) (base * 0.75);
-                double randplusminus = (1 - (rand.nextDouble() * 2)); //Determines whether damage will be + or - 25% of base
+                double randplusminus = (1 - (rand.nextDouble() * 2)); //Determines whether damage will be + or - 75% of base
                 dmg = base + (int) (percent * randplusminus);
 
                 System.out.println("Damage: " + dmg);
@@ -372,12 +375,12 @@ public class Space {
                 }
 
             }
-            if (playerchoice == 3) {
+            if (playerchoice == 3) {// Behaviour will vary from faction to faction. 
 
                 //Damage Calc
                 int base = playervessel.subweapons * 75;
                 int percent = (int) (base * 2);
-                double randplusminus = (1 - (rand.nextDouble() * 2)); //Determines whether damage will be + or - 25% of base
+                double randplusminus = (1 - (rand.nextDouble() * 0.50)); //Determines whether damage will be + or - 50% of base
                 dmg = base + (int) (percent * randplusminus);
 
                 System.out.println("Damage: " + dmg);
@@ -418,7 +421,7 @@ public class Space {
 
             }
 
-        } else { // TODO AI actions
+        } else { // TODO AI actions ogodno.
         }
     }
 }
