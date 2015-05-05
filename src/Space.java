@@ -90,7 +90,7 @@ public class Space {
                         break Loop;
 
                     case "y":
-                        Formation formation;
+                       Formation formation;
 
                         int i;
 
@@ -117,9 +117,11 @@ public class Space {
                         }
 
                         System.out.println("Choose vessel");
-
-                        Vessel vesselTBA;
-                        vesselTBA = VesselList.get(Integer.parseInt(sin.nextLine()));
+                        
+                        i = Integer.parseInt(sin.nextLine());
+                        int der = Integer.parseInt(sin.nextLine());
+                        Vessel vesselTBA = new Vessel();
+                        vesselTBA = VesselList.get(i).DeepCopy();
 
                         //Set starting resources for each ship
 
@@ -129,16 +131,15 @@ public class Space {
                         //vesselTBA.power = vesselTBA.powerlimit;
                         //vesselTBA.marines = vesselTBA.marinelimit;
                         //vesselTBA.hull = vesselTBA.hulllimit;
-                        //vesselTBA.fields = 256+i;
+                        vesselTBA.fields = der;
                         //vesselTBA.currentformation = i;
                         //vesselTBA.isdead = false;
 
 
-                        System.out.println("{" + vesselTBA.name + "} Faction:" + "[" + vesselTBA.ORFaction + "]" + " Crew Compliment " + vesselTBA.crewlimit + " Max Velocity(in open space):" + vesselTBA.speed);
-                        System.out.println("Has been added to " + formation.name);
-                        Vessel Joe = new Vessel();
-                        Joe = vesselTBA;
-                        formation.ships.add(Joe);
+                        
+                        System.out.println("{" + vesselTBA.name + "} " + vesselTBA.fields );
+                        System.out.print(" Has been added to " + formation.name);
+                        formation.ships.add(vesselTBA);
 
                         break;
                 }
@@ -151,7 +152,7 @@ public class Space {
 
             for (int j = 0; j < formations.get(i).ships.size(); j++) {
 
-                System.out.println("    " + "{" + j + "} " + formations.get(i).ships.get(j).name);
+                System.out.println("    " + "{" + j + "} " + formations.get(i).ships.get(j).name + " " + formations.get(i).ships.get(j).fields );
 
             }
         }

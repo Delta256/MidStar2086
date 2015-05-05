@@ -44,4 +44,35 @@ public class Vessel {
     int speed;    
     boolean isplayer;
     boolean isdead;
+    
+    Vessel DeepCopy(){
+        Vessel vessel = new Vessel();
+        vessel.ORFaction = ORFaction;
+        vessel.beams = beams;
+        vessel.crew = crew;
+        vessel.crewlimit = crewlimit;
+        vessel.currentformation = currentformation;
+        vessel.faction = faction;
+        vessel.fieldlimit = fieldlimit;
+        vessel.fields = fields;
+        vessel.hull = hull;
+        vessel.hulllimit = hulllimit;
+        vessel.isdead = isdead;
+        vessel.isplayer = isplayer;
+        vessel.marinelimit = marinelimit;
+        vessel.marines = marines;
+        vessel.name = name;
+        vessel.power = power;
+        vessel.powergen = powergen;
+        vessel.powerlimit = powerlimit;
+        vessel.rails = rails;
+        vessel.requisition = requisition;
+        vessel.speed = speed;
+        vessel.subweapons = subweapons;
+        
+                
+        
+        
+        return vessel;
+    }
 }
