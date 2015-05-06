@@ -11,6 +11,8 @@ public class Space {
 
     /**
      * @param args the command line arguments
+     * @throws java.io.FileNotFoundException
+     * @throws java.io.IOException
      */
     public static void main(String[] args) throws FileNotFoundException, IOException {
 
@@ -36,8 +38,6 @@ public class Space {
             }
 
             //Tear stats from Tankdefs
-
-
             vessel = new Vessel();
             vessel.name = text.split(",")[0];
             vessel.ORFaction = text.split(",")[1];
@@ -73,7 +73,7 @@ public class Space {
                         formation.name = sin.nextLine();
 
                         formations.add(formation);
-                        System.out.println("Create another team?[y/n]");
+                        System.out.println("Create another formation?[y/n]");
 
                         break;
                 }
@@ -97,7 +97,6 @@ public class Space {
 
                         for (i = 0; i < formations.size(); i++) {
 
-
                             formation = formations.get(i);
 
                             System.out.println(i + "{" + formation.name + "}");
@@ -109,7 +108,6 @@ public class Space {
                         formation = formations.get(i);
 
                         //Print lists of vessels
-
                         for (i = 0; i < VesselList.size(); i++) {
 
                             vessel = VesselList.get(i);
@@ -121,11 +119,10 @@ public class Space {
 
                         i = Integer.parseInt(sin.nextLine());
 
-                        Vessel vesselTBA = new Vessel();
+                        Vessel vesselTBA;
                         vesselTBA = VesselList.get(i).DeepCopy();
 
                         //Set starting resources for each ship
-
                         vesselTBA.crew = vesselTBA.crewlimit;
                         vesselTBA.power = vesselTBA.powerlimit;
                         vesselTBA.marines = vesselTBA.marinelimit;
@@ -133,8 +130,7 @@ public class Space {
                         vesselTBA.fields = vesselTBA.fieldlimit;
                         vesselTBA.currentformation = i;
                         vesselTBA.isdead = false;
-
-
+                        vesselTBA.isplayer = false;
 
                         System.out.println("{" + vesselTBA.name + "}" + " Has been added to " + formation.name);
                         formation.ships.add(vesselTBA);
@@ -148,60 +144,69 @@ public class Space {
 
             System.out.println("{" + i + "} " + formations.get(i).name);
 
-
             for (int j = 0; j < formations.get(i).ships.size(); j++) {
 
-                System.out.println("    " + "{" + j + "} " + formations.get(i).ships.get(j).name);
+                System.out.println("    " + "{" + j + "} " + formations.get(i).ships.get(j).name + formations.get(i).ships.get(j).isplayer );
 
             }
         }
 
         //Vessel select
         //Will be used later to define player-controlled ships for psudo-multiplayer.
-
         System.out.println("Choose your formation");
         int i = Integer.parseInt(sin.nextLine());
 
         System.out.println("Choose your ship");
         int j = Integer.parseInt(sin.nextLine());
+        System.out.println(formations.get(i).ships.get(j).name);
         formations.get(i).ships.get(j).isplayer = true;
-        Vessel playervessel = formations.get(i).ships.get(j);
-
         System.out.println("Readying vessel");
         System.out.println("");
 
         while (true) { //turnloop, goes through all ships.
 
-            while (true) { //Player control.
-                System.out.println("Input Commands:");
-                System.out.println("");
-                System.out.println("[1] Status report");
-                System.out.println("[2] Hostile actions");
+            for (i = 0; i < formations.size(); i++) {
 
-                playerchoice = Integer.parseInt(sin.nextLine());
+                System.out.println("{" + i + "} " + formations.get(i).name);
 
+                for (j = 0; j < formations.get(i).ships.size(); j++) {
+                    
+                    System.out.println("    " + "{" + j + "} " + formations.get(i).ships.get(j).name);
+                    Vessel playervessel = formations.get(i).ships.get(j);
+                    
+                    if (playervessel.isplayer == true) {
 
-                if (playerchoice == 1) { //Status report
-                    printVessel(playervessel);
-                }
+                        while (true) { //Player control.
+                            System.out.println("Input Commands:");
+                            System.out.println("");
+                            System.out.println("[1] Status report");
+                            System.out.println("[2] Hostile actions");
 
-                if (playerchoice == 2) { //Attack command
+                            playerchoice = Integer.parseInt(sin.nextLine());
 
-                    printformations(formations);
-                    System.out.println("Choose target formation");
-                    i = Integer.parseInt(sin.nextLine());
-                    printvessels(formations.get(i));
-                    System.out.println("Choose target ship");
-                    j = Integer.parseInt(sin.nextLine());
+                            if (playerchoice == 1) { //Status report
+                                printVessel(playervessel);
+                            }
 
-                    Vessel targetvessel;
-                    targetvessel = formations.get(i).ships.get(j);
-                    attack(playervessel, targetvessel);
+                            if (playerchoice == 2) { //Attack command
 
+                                printformations(formations);
+                                System.out.println("Choose target formation");
+                                i = Integer.parseInt(sin.nextLine());
+                                printvessels(formations.get(i));
+                                System.out.println("Choose target ship");
+                                j = Integer.parseInt(sin.nextLine());
 
-                    System.out.println("Press Enter to continue");// End turn
-                    if (sin.nextLine() != null) {
-                        break;
+                                Vessel targetvessel;
+                                targetvessel = formations.get(i).ships.get(j);
+                                attack(playervessel, targetvessel);
+
+                                System.out.println("Press Enter to continue");// End turn
+                                if (sin.nextLine() != null) {
+                                    break;
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -213,7 +218,6 @@ public class Space {
         for (int i = 0; i < formations.size(); i++) {
 
             System.out.println("{" + i + "} " + formations.get(i).name);
-
 
             for (int j = 0; j < formations.get(i).ships.size(); j++) {
 
@@ -253,6 +257,7 @@ public class Space {
         System.out.println(playervessel.currentformation);
         System.out.println("Resources available: " + playervessel.requisition);
         System.out.println("");
+        System.out.println(playervessel.isplayer);
     }
 
     public static void attack(Vessel playervessel, Vessel targetvessel) {
@@ -295,7 +300,6 @@ public class Space {
 
                 System.out.println("Damage: " + dmg);
 
-
                 if (targetvessel.fields <= dmg) {//Checks if shields can be brought down
 
                     System.out.println(targetvessel.fields);
@@ -313,7 +317,7 @@ public class Space {
                     } else if (targetvessel.hull >= dmg) { //Damages hull
 
                         System.out.println(targetvessel.hull);
-                        targetvessel.hull = (int) (targetvessel.hull - (dmg*1.10));
+                        targetvessel.hull = (int) (targetvessel.hull - (dmg * 1.10));
                         System.out.println(targetvessel.hull);
 
                         System.out.println("We've hit their hull.");
@@ -339,7 +343,6 @@ public class Space {
                 dmg = base + (int) (percent * randplusminus);
 
                 System.out.println("Damage: " + dmg);
-
 
                 if (targetvessel.fields <= dmg) {
 
@@ -384,7 +387,6 @@ public class Space {
                 dmg = base + (int) (percent * randplusminus);
 
                 System.out.println("Damage: " + dmg);
-
 
                 if (targetvessel.fields <= dmg) {
 
