@@ -37,7 +37,7 @@ public class Space {
 
             }
 
-            //Tear stats from Tankdefs
+            //Tear stats from shipmid
             vessel = new Vessel();
             vessel.name = text.split(",")[0];
             vessel.ORFaction = text.split(",")[1];
@@ -140,43 +140,57 @@ public class Space {
                 }
             }
         }
-        for (int i = 0; i < formations.size(); i++) {
 
-            System.out.println("{" + i + "} " + formations.get(i).name);
+        Loop:
+        {
+            while (true) {
+                switch (sin.nextLine()) {
 
-            for (int j = 0; j < formations.get(i).ships.size(); j++) {
+                    case "n":
+                        break Loop;
 
-                System.out.println("    " + "{" + j + "} " + formations.get(i).ships.get(j).name + formations.get(i).ships.get(j).isplayer );
+                    case "y":
+                        //Vessel select
+                        //Will be used later to define player-controlled ships for psudo-multiplayer.
+                        listFNV(formations);
 
+                        System.out.println("Choose your formation");
+                        int i = Integer.parseInt(sin.nextLine());
+
+                        System.out.println("Choose your ship");
+                        int j = Integer.parseInt(sin.nextLine());
+                        System.out.println(formations.get(i).ships.get(j).name);
+                        formations.get(i).ships.get(j).isplayer = true;
+                        System.out.println("Readying vessel");
+                        System.out.println("Any more? (y/n)");
+                        break;
+                }
             }
         }
 
-        //Vessel select
-        //Will be used later to define player-controlled ships for psudo-multiplayer.
-        System.out.println("Choose your formation");
-        int i = Integer.parseInt(sin.nextLine());
-
-        System.out.println("Choose your ship");
-        int j = Integer.parseInt(sin.nextLine());
-        System.out.println(formations.get(i).ships.get(j).name);
-        formations.get(i).ships.get(j).isplayer = true;
-        System.out.println("Readying vessel");
-        System.out.println("");
-
         while (true) { //turnloop, goes through all ships.
 
-            for (i = 0; i < formations.size(); i++) {
+            for (int k = 0; k < formations.size(); k++) {
 
-                System.out.println("{" + i + "} " + formations.get(i).name);
+                System.out.println("{" + k + "} " + formations.get(k).name);
 
-                for (j = 0; j < formations.get(i).ships.size(); j++) {
-                    
-                    System.out.println("    " + "{" + j + "} " + formations.get(i).ships.get(j).name);
-                    Vessel playervessel = formations.get(i).ships.get(j);
-                    
+                for (int l = 0; l < formations.get(k).ships.size(); l++) {
+
+                    System.out.println("    " + "{" + l + "} " + formations.get(k).ships.get(l).name);
+                    Vessel playervessel = formations.get(k).ships.get(l);
+                    if (k == formations.size()) {
+                        k = 0;
+                    }
+
                     if (playervessel.isplayer == true) {
 
                         while (true) { //Player control.
+
+                            if (playervessel.isdead == true) { //Checks if ur ded bro.0
+                                playervessel.isplayer = false;
+                                break;
+                            }
+
                             System.out.println("Input Commands:");
                             System.out.println("");
                             System.out.println("[1] Status report");
@@ -192,10 +206,10 @@ public class Space {
 
                                 printformations(formations);
                                 System.out.println("Choose target formation");
-                                i = Integer.parseInt(sin.nextLine());
+                                int i = Integer.parseInt(sin.nextLine());
                                 printvessels(formations.get(i));
                                 System.out.println("Choose target ship");
-                                j = Integer.parseInt(sin.nextLine());
+                                int j = Integer.parseInt(sin.nextLine());
 
                                 Vessel targetvessel;
                                 targetvessel = formations.get(i).ships.get(j);
