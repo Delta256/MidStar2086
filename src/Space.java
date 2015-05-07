@@ -219,10 +219,7 @@ public class Space {
 
                                 System.out.println("Press Enter to continue");// End turn, generate power
                                 if (sin.nextLine() != null) {
-                                    playervessel.power = playervessel.power + playervessel.powergen;
-                                    if (playervessel.power >= playervessel.powerlimit) {
-                                        playervessel.power = playervessel.powerlimit;
-                                    }
+                                    endturn(playervessel);
                                     break;
                                 }
                             }
@@ -231,6 +228,16 @@ public class Space {
                 }
             }
         }
+    }
+
+    public static void endturn(Vessel playervessel) {
+        playervessel.power = playervessel.power + playervessel.powergen;
+        if (playervessel.power >= playervessel.powerlimit) {
+            playervessel.power = playervessel.powerlimit;
+        }
+        //if (playervessel.crewtasks == 0 && playervessel.) {
+        //    playervessel.power = playervessel.powerlimit;
+        //}
     }
 
     public static void listFNV(List<Formation> formations) {
@@ -253,6 +260,39 @@ public class Space {
 
             System.out.println("{" + i + "} " + formations.get(i).name);
 
+        }
+    }
+
+    public static void damcon(Vessel playervessel) {
+        Scanner sin = new Scanner(System.in);
+        double shieldgen = ((playervessel.powergen * 0.10) + (playervessel.crew * 2) + (playervessel.fieldlimit / 4));
+        double shieldcost = shieldgen * 1.20;
+        while (1 == 1) {
+
+            System.out.println("Available power: " + playervessel.power + "/" + playervessel.powerlimit);
+            System.out.println("Field Integrity: " + playervessel.fields + "/" + playervessel.fieldlimit);
+            System.out.println("Structural Integrity: " + playervessel.hull + "/" + playervessel.hulllimit);
+            System.out.println("");
+            System.out.println("Input Commands:");
+            System.out.println("");
+            System.out.println("[1] Divert power to fields" + " COST:" + shieldcost + "|" + "GENERATES:" + shieldgen);
+            System.out.println("[2] Drop fields");
+
+            if (Integer.parseInt(sin.nextLine()) == 1 && playervessel.power >= shieldcost) {
+
+                playervessel.fields = (int) (playervessel.fields + shieldgen);
+
+                if (playervessel.fields >= playervessel.fieldlimit) {
+                    playervessel.fields = playervessel.fieldlimit;
+                }
+                break;
+            }
+
+            if (Integer.parseInt(sin.nextLine()) == 1 && playervessel.power >= shieldcost) {
+                playervessel.power = playervessel.power + playervessel.fields;
+                playervessel.fields = 0;
+                break;
+            }
         }
     }
 

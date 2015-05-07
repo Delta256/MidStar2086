@@ -35,6 +35,7 @@ public class Vessel {
 
     
     //dynaminc traits
+    int crewtasks = 0;
     int currentformation;
     int requisition = -1;
     int hull;
