@@ -143,7 +143,7 @@ public class Space {
         System.out.println("Select player-controlled? (y/n)");
         Loop:
         {
-            while (true) {
+            for (;;) {
                 switch (sin.nextLine()) {
 
                     case "n":
@@ -223,6 +223,9 @@ public class Space {
                                     break;
                                 }
                             }
+                            if (playerchoice == 3) { //Energy stuff
+                                damcon(playervessel);
+                            }
                         }
                     }
                 }
@@ -235,9 +238,12 @@ public class Space {
         if (playervessel.power >= playervessel.powerlimit) {
             playervessel.power = playervessel.powerlimit;
         }
-        //if (playervessel.crewtasks == 0 && playervessel.) {
-        //    playervessel.power = playervessel.powerlimit;
-        //}
+        if (playervessel.crewtasks == 0) {
+            playervessel.hull = playervessel.hull + (playervessel.crew * 2);
+            if (playervessel.hull >= playervessel.hulllimit) {
+                playervessel.hull = playervessel.hulllimit;
+            }
+        }
     }
 
     public static void listFNV(List<Formation> formations) {
@@ -267,7 +273,8 @@ public class Space {
         Scanner sin = new Scanner(System.in);
         double shieldgen = ((playervessel.powergen * 0.10) + (playervessel.crew * 2) + (playervessel.fieldlimit / 4));
         double shieldcost = shieldgen * 1.20;
-        while (1 == 1) {
+        int playerchoice;
+        while (true) {
 
             System.out.println("Available power: " + playervessel.power + "/" + playervessel.powerlimit);
             System.out.println("Field Integrity: " + playervessel.fields + "/" + playervessel.fieldlimit);
@@ -277,8 +284,8 @@ public class Space {
             System.out.println("");
             System.out.println("[1] Divert power to fields" + " COST:" + shieldcost + "|" + "GENERATES:" + shieldgen);
             System.out.println("[2] Drop fields");
-
-            if (Integer.parseInt(sin.nextLine()) == 1 && playervessel.power >= shieldcost) {
+            playerchoice = Integer.parseInt(sin.nextLine());
+            if (playerchoice == 1 && playervessel.power >= shieldcost) {
 
                 playervessel.fields = (int) (playervessel.fields + shieldgen);
 
@@ -288,7 +295,7 @@ public class Space {
                 break;
             }
 
-            if (Integer.parseInt(sin.nextLine()) == 1 && playervessel.power >= shieldcost) {
+            if (playerchoice == 2 && playervessel.power >= shieldcost) {
                 playervessel.power = playervessel.power + playervessel.fields;
                 playervessel.fields = 0;
                 break;
