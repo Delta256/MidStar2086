@@ -355,8 +355,8 @@ public class Space {
         int powercost;
         Random rand = new Random();
 
-        if (playervessel.isplayer = true) {
 
+        if (playervessel.isplayer = true) {
             while (true) {
 
                 System.out.println("Attack " + targetvessel.name + " with");
@@ -549,7 +549,6 @@ public class Space {
                     }
                 }
             }
-        } else { // TODO AI actions.
         }
     }
 }
