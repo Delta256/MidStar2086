@@ -46,6 +46,7 @@ public class Vessel {
     int speed;    
     boolean isplayer;
     boolean isdead;
+    boolean opt3 = true;
     
     Vessel DeepCopy(){
         Vessel vessel = new Vessel();

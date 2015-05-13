@@ -197,11 +197,17 @@ public class Space {
                             System.out.println("");
                             System.out.println("[1] Status report");
                             System.out.println("[2] Hostile actions");
+                            if (playervessel.opt3 == true) {
+                                System.out.println("[3] Power Management");
+                            }
 
                             playerchoice = Integer.parseInt(sin.nextLine());
 
                             if (playerchoice == 1) { //Status report
                                 printVessel(playervessel);
+                                System.out.println("");
+                                listFNV(formations);
+
                             }
 
                             if (playerchoice == 2) { //Attack command
@@ -223,8 +229,8 @@ public class Space {
                                     break;
                                 }
                             }
-                            if (playerchoice == 3) { //Energy stuff
-                                damcon(playervessel);
+                            if (playerchoice == 3 && playervessel.opt3 == true) { //Energy stuff
+                                fieldmanage(playervessel);
                             }
                         }
                     }
@@ -235,6 +241,7 @@ public class Space {
 
     public static void endturn(Vessel playervessel) {
         playervessel.power = playervessel.power + playervessel.powergen;
+        playervessel.opt3 = true;
         if (playervessel.power >= playervessel.powerlimit) {
             playervessel.power = playervessel.powerlimit;
         }
@@ -254,8 +261,21 @@ public class Space {
 
             for (int j = 0; j < formations.get(i).ships.size(); j++) {
 
-                System.out.println("    " + "{" + j + "} " + formations.get(i).ships.get(j).name);
-
+                System.out.println("    " + "{" + j + "} " + formations.get(i).ships.get(j).name + " ");
+                double percentage = (((double) formations.get(i).ships.get(j).hull / (double) formations.get(i).ships.get(j).hulllimit) * 100);
+                if (percentage >= 90) {
+                    System.out.println("            Undamaged");
+                } else if (percentage >= 70) {
+                    System.out.println("            Slight damage");
+                } else if (percentage >= 50) {
+                    System.out.println("            Moderate damage");
+                } else if (percentage >= 30) {
+                    System.out.println("            Heavy Damage");
+                } else if (percentage >= 10) {
+                    System.out.println("            Critical Damage");
+                } else if (percentage >= 0) {
+                    System.out.println("            Disabled");
+                }
             }
         }
     }
@@ -269,7 +289,7 @@ public class Space {
         }
     }
 
-    public static void damcon(Vessel playervessel) {
+    public static void fieldmanage(Vessel playervessel) {
         Scanner sin = new Scanner(System.in);
         double shieldgen = ((playervessel.powergen * 0.10) + (playervessel.crew * 2) + (playervessel.fieldlimit / 4));
         double shieldcost = shieldgen * 1.20;
@@ -292,12 +312,14 @@ public class Space {
                 if (playervessel.fields >= playervessel.fieldlimit) {
                     playervessel.fields = playervessel.fieldlimit;
                 }
+                playervessel.opt3 = false;
                 break;
             }
 
             if (playerchoice == 2 && playervessel.power >= shieldcost) {
                 playervessel.power = playervessel.power + playervessel.fields;
                 playervessel.fields = 0;
+                playervessel.opt3 = false;
                 break;
             }
         }
@@ -383,7 +405,6 @@ public class Space {
 
                             System.out.println(targetvessel.fields);
                             dmg = dmg - targetvessel.fields;
-                            System.out.println("Damage Remaining: " + dmg);
                             targetvessel.fields = 0;
 
                             if (targetvessel.hull <= dmg) { //checks if ship is killable
@@ -391,7 +412,7 @@ public class Space {
                                 dmg = 0;
                                 targetvessel.hull = 0;
                                 targetvessel.isdead = true;
-                                System.out.println("Got 'em!");
+                                System.out.println("Target Neutralised");
 
                             } else if (targetvessel.hull >= dmg) { //Damages hull
 
@@ -400,6 +421,7 @@ public class Space {
                                 System.out.println(targetvessel.hull);
 
                                 System.out.println("We've hit their hull.");
+
 
                             }
                         } else if (targetvessel.fields >= dmg) { //Does shield damage
