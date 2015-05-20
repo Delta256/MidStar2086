@@ -274,8 +274,10 @@ public class Space {
                 } else if (percentage >= 10) {
                     System.out.println("            Critical Damage");
                 } else if (percentage >= 0) {
-                    System.out.println("            Disabled");
+                    System.out.println("            ##Disabled##");
                 }
+                System.out.println("            Fields:"+formations.get(i).ships.get(j).fields);
+
             }
         }
     }
@@ -379,7 +381,7 @@ public class Space {
                     System.out.println("[3] Rocket arrays" + "(" + playervessel.subweapons + ")" + " POWER NEEDED: " + playervessel.subweapons * 50);
                 }
 
-                System.out.println("Power Available" + playervessel.power);
+                System.out.println("Power Available:" + playervessel.power);
                 playerchoice = Integer.parseInt(sin.nextLine());
 
                 if (playerchoice == 1) {//Beams are consistant, and do bonus vs. hull.
