@@ -53,6 +53,7 @@ public class Space {
             vessel.rails = Integer.parseInt(text.split(",")[11]);
             vessel.subweapons = Integer.parseInt(text.split(",")[12]);
             vessel.cost = Integer.parseInt(text.split(",")[13]);
+            vessel.marineskill = Integer.parseInt(text.split(",")[14]);
             VesselList.add(vessel);
         }
 
@@ -128,6 +129,7 @@ public class Space {
                         vesselTBA.marines = vesselTBA.marinelimit;
                         vesselTBA.hull = vesselTBA.hulllimit;
                         vesselTBA.fields = vesselTBA.fieldlimit;
+                        vesselTBA.maxspeed = vesselTBA.speed;
                         vesselTBA.currentformation = i;
                         vesselTBA.isdead = false;
                         vesselTBA.isplayer = false;
@@ -186,7 +188,7 @@ public class Space {
 
                         while (true) { //Player control.
 
-                            if (playervessel.isdead == true) { //Checks if ur ded bro.0
+                            if (playervessel.isdead == true) { //Checks if ur ded bro.
                                 playervessel.isplayer = false;
                                 break;
                             }
@@ -195,8 +197,12 @@ public class Space {
                             System.out.println("");
                             System.out.println("Input Commands:");
                             System.out.println("");
-                            System.out.println("[1] Status report");
+                            System.out.println("[1] Ship Status");
+
                             System.out.println("[2] Hostile actions");
+                            System.out.println("[4] Crew management");
+                            System.out.println("[5] Boarding actions");
+
                             if (playervessel.opt3 == true) {
                                 System.out.println("[3] Power Management");
                             }
@@ -204,23 +210,16 @@ public class Space {
                             playerchoice = Integer.parseInt(sin.nextLine());
 
                             if (playerchoice == 1) { //Status report
+                                System.out.println("");
                                 printVessel(playervessel);
                                 System.out.println("");
-                                listFNV(formations);
-
+                                System.out.println("Press Enter when ready.");
+                                sin.nextLine();
                             }
 
                             if (playerchoice == 2) { //Attack command
 
-                                printformations(formations);
-                                System.out.println("Choose target formation");
-                                int i = Integer.parseInt(sin.nextLine());
-                                printvessels(formations.get(i));
-                                System.out.println("Choose target ship");
-                                int j = Integer.parseInt(sin.nextLine());
-
-                                Vessel targetvessel;
-                                targetvessel = formations.get(i).ships.get(j);
+                                Vessel targetvessel = choosevessel(formations);
                                 attack(playervessel, targetvessel);
 
                                 System.out.println("Press Enter to continue");// End turn, generate power
@@ -229,14 +228,40 @@ public class Space {
                                     break;
                                 }
                             }
+
                             if (playerchoice == 3 && playervessel.opt3 == true) { //Energy stuff
                                 fieldmanage(playervessel);
+                            }
+
+                            if (playerchoice == 4) { //Crew prefs
+                                fieldmanage(playervessel);
+                            }
+
+                            if (playerchoice == 5) { //Boarding
+                                if (playervessel.fields == 0) {
+                                    fieldmanage(playervessel);
+                                } else {
+                                    System.out.println("Shields on both ships must be lowered first");
+                                }
                             }
                         }
                     }
                 }
             }
         }
+    }
+
+    public static Vessel choosevessel(List<Formation> formations) {
+        Scanner sin = new Scanner(System.in);
+        Vessel targetvessel;
+        printformations(formations);
+        System.out.println("Choose target formation");
+        int i = Integer.parseInt(sin.nextLine());
+        printvessels(formations.get(i));
+        System.out.println("Choose target ship");
+        int j = Integer.parseInt(sin.nextLine());
+        targetvessel = formations.get(i).ships.get(j);
+        return (targetvessel);
     }
 
     public static void endturn(Vessel playervessel) {
@@ -276,7 +301,8 @@ public class Space {
                 } else if (percentage >= 0) {
                     System.out.println("            ##Disabled##");
                 }
-                System.out.println("            Fields:"+formations.get(i).ships.get(j).fields);
+                System.out.println("            Fields:" + formations.get(i).ships.get(j).fields);
+                System.out.println("     Current Speed:" + formations.get(i).ships.get(j).speed);
 
             }
         }
@@ -381,15 +407,15 @@ public class Space {
                     System.out.println("[3] Rocket arrays" + "(" + playervessel.subweapons + ")" + " POWER NEEDED: " + playervessel.subweapons * 50);
                 }
 
-                System.out.println("Power Available:" + playervessel.power);
+                System.out.println("Power Available: " + playervessel.power);
                 playerchoice = Integer.parseInt(sin.nextLine());
 
                 if (playerchoice == 1) {//Beams are consistant, and do bonus vs. hull.
 
                     powercost = playervessel.beams * 40;
-                    System.out.println("power" + playervessel.power);
-                    System.out.println("powercost" + powercost);
-
+                    if (playervessel.crewtasks == 1) {
+                        powercost *= 1.20;
+                    }
 
                     if (playervessel.power >= powercost) {
 
@@ -400,8 +426,128 @@ public class Space {
                         int percent = (int) (base * 0.25);
                         double randplusminus = (1 - (rand.nextDouble() * 2)); //Determines whether damage will be + or - 25% of base
                         dmg = base + (int) (percent * randplusminus);
-
                         System.out.println("Damage: " + dmg);
+                        if (playervessel.crewtasks == 1) {
+                            dmg *= 1.25;
+                            System.out.println("NewDamage: " + dmg);
+                        }
+
+                        if (targetvessel.fields <= dmg) {//Checks if shields can be brought down
+
+                            System.out.println(targetvessel.fields);
+                            dmg = dmg - targetvessel.fields;
+                            targetvessel.fields = 0;
+
+                            if (targetvessel.hull <= dmg) { //checks if ship is killable
+
+                                dmg = 0;
+                                targetvessel.hull = 0;
+                                targetvessel.isdead = true;
+                                System.out.println("Target Neutralised");
+
+                            } else if (targetvessel.hull >= dmg) { //Damages hull
+
+                                System.out.println(targetvessel.hull);
+                                targetvessel.hull = (int) (targetvessel.hull - (dmg * 1.10));
+                                System.out.println(targetvessel.hull);
+
+                                System.out.println("We've hit their hull.");
+
+
+                            }
+                        } else if (targetvessel.fields >= dmg) { //Does shield damage
+
+                            System.out.println(targetvessel.fields);
+                            targetvessel.fields = targetvessel.fields - dmg;
+                            System.out.println(targetvessel.fields);
+
+                            System.out.println("We've hit their energy barriers.");
+                        }
+                        break;
+                    }
+                }
+
+                if (playerchoice == 2) {//Railguns are harder to predict...
+
+                    powercost = playervessel.rails * 35;
+                    if (playervessel.crewtasks == 1) {
+                        powercost *= 1.20;
+                    }
+
+                    if (playervessel.power >= powercost) {
+
+                        playervessel.power = playervessel.power - powercost;
+
+                        //Damage Calc
+                        int base = playervessel.beams * 40;
+                        int percent = (int) (base * 0.30);
+                        double randplusminus = (1 - (rand.nextDouble() * 2)); //Determines whether damage will be + or - 25% of base
+                        dmg = base + (int) (percent * randplusminus);
+                        System.out.println("Damage: " + dmg);
+                        if (playervessel.crewtasks == 1) {
+                            dmg *= 1.25;
+                            System.out.println("NewDamage: " + dmg);
+                        }
+
+                        if (targetvessel.fields <= dmg) {//Checks if shields can be brought down
+
+                            System.out.println(targetvessel.fields);
+                            dmg = dmg - targetvessel.fields;
+                            targetvessel.fields = 0;
+
+                            if (targetvessel.hull <= dmg) { //checks if ship is killable
+
+                                dmg = 0;
+                                targetvessel.hull = 0;
+                                targetvessel.isdead = true;
+                                System.out.println("Target Neutralised");
+
+                            } else if (targetvessel.hull >= dmg) { //Damages hull
+
+                                System.out.println(targetvessel.hull);
+                                targetvessel.hull = (int) (targetvessel.hull - (dmg * 1.10));
+                                System.out.println(targetvessel.hull);
+
+                                System.out.println("We've hit their hull.");
+
+
+                            }
+                        } else if (targetvessel.fields >= dmg) { //Does shield damage
+
+                            System.out.println(targetvessel.fields);
+                            targetvessel.fields = targetvessel.fields - dmg;
+                            System.out.println(targetvessel.fields);
+
+                            System.out.println("We've hit their energy barriers.");
+
+                        }
+                        break;
+                    }
+                }
+
+
+                if (playerchoice == 3) {//Subweapons are devestating...
+
+                    powercost = playervessel.subweapons * 60;
+                    if (playervessel.crewtasks == 1) {
+                        powercost *= 1.20;
+                    }
+
+                    if (playervessel.power >= powercost) {
+
+                        playervessel.power = playervessel.power - powercost;
+
+                        //Damage Calc
+                        int base = playervessel.subweapons * 55;
+                        int percent = (int) (base * 0.50);
+                        double randplusminus = (1 - (rand.nextDouble() * 2)); //Determines whether damage will be + or - 25% of base
+                        dmg = base + (int) (percent * randplusminus);
+                        System.out.println("Damage: " + dmg);
+                        if (playervessel.crewtasks == 1) {
+                            dmg *= 1.25;
+                            System.out.println("NewDamage: " + dmg);
+                        }
+
 
                         if (targetvessel.fields <= dmg) {//Checks if shields can be brought down
 
@@ -441,115 +587,6 @@ public class Space {
                 }
 
 
-
-                if (playerchoice == 2) {//Railguns cost less to fire, but are more unpredictable.
-
-                    powercost = playervessel.rails * 30;
-                    System.out.println("power" + playervessel.power);
-                    System.out.println("powercost" + powercost);
-
-
-                    if (playervessel.power >= powercost) {
-
-                        playervessel.power = playervessel.power - powercost;
-
-                        //Damage Calc
-                        int base = playervessel.rails * 35;
-                        int percent = (int) (base * 0.75);
-                        double randplusminus = (1 - (rand.nextDouble() * 2)); //Determines whether damage will be + or - 75% of base
-                        dmg = base + (int) (percent * randplusminus);
-
-                        System.out.println("Damage: " + dmg);
-
-                        if (targetvessel.fields <= dmg) {
-
-                            System.out.println(targetvessel.fields);
-                            dmg = dmg - targetvessel.fields;
-                            System.out.println("Damage Remaining: " + dmg);
-                            targetvessel.fields = 0;
-
-                            if (targetvessel.hull <= dmg) { //checks if ship is killable
-
-                                dmg = 0;
-                                targetvessel.hull = 0;
-                                targetvessel.isdead = true;
-                                System.out.println("Got 'em!");
-
-                            } else if (targetvessel.hull >= dmg) { //checks if ship is killable
-
-                                System.out.println(targetvessel.hull);
-                                targetvessel.hull = targetvessel.hull - dmg;
-                                System.out.println(targetvessel.hull);
-
-                                System.out.println("We've hit their hull.");
-
-                            }
-                        } else if (targetvessel.fields >= dmg) { //Does shield damage
-
-                            System.out.println(targetvessel.fields);
-                            targetvessel.fields = targetvessel.fields - dmg;
-                            System.out.println(targetvessel.fields);
-
-                            System.out.println("We've hit their energy barriers.");
-
-                        }
-                        break;
-                    }
-                }
-                if (playerchoice == 3) {// Behaviour will vary from faction to faction. 
-
-                    powercost = playervessel.subweapons * 50;
-                    System.out.println("power" + playervessel.power);
-                    System.out.println("powercost" + powercost);
-
-
-                    if (playervessel.power >= powercost) {
-
-                        playervessel.power = playervessel.power - powercost;
-
-                        //Damage Calc
-                        int base = playervessel.subweapons * 75;
-                        int percent = (int) (base * 0.50);
-                        double randplusminus = (1 - (rand.nextDouble() * 2)); //Determines whether damage will be + or - 50% of base
-                        dmg = base + (int) (percent * randplusminus);
-
-                        System.out.println("Damage: " + dmg);
-
-                        if (targetvessel.fields <= dmg) {
-
-                            System.out.println(targetvessel.fields);
-                            dmg = dmg - targetvessel.fields;
-                            System.out.println("Damage Remaining: " + dmg);
-                            targetvessel.fields = 0;
-
-                            if (targetvessel.hull <= dmg) { //checks if ship is killable
-
-                                dmg = 0;
-                                targetvessel.hull = 0;
-                                targetvessel.isdead = true;
-                                System.out.println("Got 'em!");
-
-                            } else if (targetvessel.hull >= dmg) { //checks if ship is killable
-
-                                System.out.println(targetvessel.hull);
-                                targetvessel.hull = targetvessel.hull - dmg;
-                                System.out.println(targetvessel.hull);
-
-                                System.out.println("We've hit their hull.");
-
-                            }
-                        } else if (targetvessel.fields >= dmg) { //Does shield damage
-
-                            System.out.println(targetvessel.fields);
-                            targetvessel.fields = targetvessel.fields - dmg;
-                            System.out.println(targetvessel.fields);
-
-                            System.out.println("We've hit their energy barriers.");
-
-                        }
-                        break;
-                    }
-                }
             }
         }
     }

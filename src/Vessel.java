@@ -29,6 +29,8 @@ public class Vessel {
     int rails;    
     int subweapons;
     int cost;
+    int maxspeed;
+    int marineskill;
     
     
     
@@ -43,7 +45,13 @@ public class Vessel {
     int marines; 
     int power;
     int fields; 
-    int speed;    
+    int speed;
+    
+    int enginedamage;
+    int generatordamage;
+    int specialdamage;
+    int TSdamage;
+    
     boolean isplayer;
     boolean isdead;
     boolean opt3 = true;
@@ -73,6 +81,8 @@ public class Vessel {
         vessel.speed = speed;
         vessel.subweapons = subweapons;
         vessel.cost = cost;
+        vessel.maxspeed = maxspeed;
+        vessel.marineskill = marineskill;
         
                 
         
