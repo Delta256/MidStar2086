@@ -37,7 +37,7 @@ public class Space {
 
             }
 
-            //Tear stats from shipmid
+            //Tear stats from shiptypes.mid
             vessel = new Vessel();
             vessel.name = text.split(",")[0];
             vessel.ORFaction = text.split(",")[1];
@@ -234,7 +234,7 @@ public class Space {
                             }
 
                             if (playerchoice == 4) { //Crew prefs
-                                fieldmanage(playervessel);
+                                crewmanage(playervessel);
                             }
 
                             if (playerchoice == 5) { //Boarding
@@ -248,6 +248,23 @@ public class Space {
                     }
                 }
             }
+        }
+    }
+
+    public static void crewmanage(Vessel playervessel) {
+        Scanner sin = new Scanner(System.in);
+        int pref;
+        System.out.println("Choose crew priority");
+        System.out.println("[0] Repairs");
+        System.out.println("[1] Weapon systems");
+        System.out.println("[2] Power Generation");
+        System.out.println("[3] Field maintainence");
+        System.out.println("[4] Sekret Powar");
+        pref = Integer.parseInt(sin.nextLine());
+        if (pref >= 4) {
+            playervessel.crewtasks = pref;
+        } else {
+            System.out.println("BORK BORK BORK!");
         }
     }
 
