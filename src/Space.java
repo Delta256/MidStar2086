@@ -239,7 +239,9 @@ public class Space {
 
                             if (playerchoice == 5) { //Boarding
                                 if (playervessel.fields == 0) {
-                                    fieldmanage(playervessel);
+                                    Vessel targetvessel = choosevessel(formations);
+                                    boarding(playervessel, targetvessel);
+
                                 } else {
                                     System.out.println("Shields on both ships must be lowered first");
                                 }
@@ -248,6 +250,14 @@ public class Space {
                     }
                 }
             }
+        }
+    }
+
+    public static void boarding(Vessel playervessel, Vessel targetvessel) {
+        if (targetvessel.fields == 0) {
+            System.out.println("BORKBORKBORK!");
+        } else {
+            System.out.println("U CHEEKY SKRUB 1v1 ME M80");
         }
     }
 
@@ -306,7 +316,7 @@ public class Space {
                 System.out.println("    " + "{" + j + "} " + formations.get(i).ships.get(j).name + " ");
                 double percentage = (((double) formations.get(i).ships.get(j).hull / (double) formations.get(i).ships.get(j).hulllimit) * 100);
                 if (percentage >= 90) {
-                    System.out.println("            Undamaged");
+                    System.out.print("        (Undamaged)");
                 } else if (percentage >= 70) {
                     System.out.println("            Slight damage");
                 } else if (percentage >= 50) {
@@ -318,8 +328,9 @@ public class Space {
                 } else if (percentage >= 0) {
                     System.out.println("            ##Disabled##");
                 }
-                System.out.println("            Fields:" + formations.get(i).ships.get(j).fields);
-                System.out.println("     Current Speed:" + formations.get(i).ships.get(j).speed);
+                System.out.print(" |Fields:" + formations.get(i).ships.get(j).fields+"|");
+                System.out.print(" |Velocity:" + formations.get(i).ships.get(j).speed+"|");
+                System.out.println("");
 
             }
         }
@@ -375,6 +386,8 @@ public class Space {
         for (int i = 0; i < formation.ships.size(); i++) {
 
             System.out.println("{" + i + "} " + formation.ships.get(i).name);
+            System.out.println("     Current Velocity: " + formation.ships.get(i).speed);
+            System.out.println("     Fields: " + formation.ships.get(i).fields);
 
         }
     }
@@ -600,10 +613,7 @@ public class Space {
                         }
                         break;
                     }
-
                 }
-
-
             }
         }
     }
