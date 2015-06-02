@@ -54,6 +54,7 @@ public class Space {
             vessel.subweapons = Integer.parseInt(text.split(",")[12]);
             vessel.cost = Integer.parseInt(text.split(",")[13]);
             vessel.marineskill = Integer.parseInt(text.split(",")[14]);
+            vessel.marinetype = text.split(",")[15];
             VesselList.add(vessel);
         }
 
@@ -244,6 +245,7 @@ public class Space {
 
                                 } else {
                                     System.out.println("Shields on both ships must be lowered first");
+                                    sin.nextLine();
                                 }
                             }
                         }
@@ -255,9 +257,13 @@ public class Space {
 
     public static void boarding(Vessel playervessel, Vessel targetvessel) {
         if (targetvessel.fields == 0) {
-            System.out.println("BORKBORKBORK!");
+            
+            System.out.println("Your ship has " + playervessel.marines + " " + playervessel.marinetype + " on standby");
+            System.out.println("Enemy ship has " + targetvessel.marines + " " + targetvessel.marinetype + " onboard");
+        
+        
         } else {
-            System.out.println("U CHEEKY SKRUB 1v1 ME M80");
+            System.out.println("Shields on both ships must be lowered first");
         }
     }
 
@@ -388,10 +394,11 @@ public class Space {
             System.out.println("{" + i + "} " + formation.ships.get(i).name);
             System.out.println("     Current Velocity: " + formation.ships.get(i).speed);
             System.out.println("     Fields: " + formation.ships.get(i).fields);
+            
 
         }
     }
-
+    
     public static void printVessel(Vessel playervessel) {
         System.out.println("SITREP");
         System.out.println(playervessel.name + ":");

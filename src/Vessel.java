@@ -15,6 +15,7 @@ public class Vessel {
     //Text-y stuff
     String name;
     String ORFaction;
+    String marinetype;
     
     
     //static traits
@@ -31,6 +32,7 @@ public class Vessel {
     int cost;
     int maxspeed;
     int marineskill;
+    
     
     
     
@@ -83,6 +85,7 @@ public class Vessel {
         vessel.cost = cost;
         vessel.maxspeed = maxspeed;
         vessel.marineskill = marineskill;
+        vessel.marinetype = marinetype;
         
                 
         
