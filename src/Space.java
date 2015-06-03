@@ -34,7 +34,7 @@ public class Space {
             if (text.equals(".")) { //Break loop when EoF is reached
 
                 firstrun = 0; //Stops the game from trying to load vessels 
-                break;        //after is has done so already
+                break;        //after it has done so already
 
             }
 
@@ -122,22 +122,22 @@ public class Space {
 
                         i = Integer.parseInt(sin.nextLine());
 
-                        Vessel vesselTBA;
-                        vesselTBA = VesselList.get(i).DeepCopy();
+                        //Vessel vessel;
+                        vessel = VesselList.get(i).DeepCopy();
 
                         //Set starting resources for each ship
-                        vesselTBA.crew = vesselTBA.crewlimit;
-                        vesselTBA.power = vesselTBA.powerlimit;
-                        vesselTBA.marines = vesselTBA.marinelimit;
-                        vesselTBA.hull = vesselTBA.hulllimit;
-                        vesselTBA.fields = vesselTBA.fieldlimit;
-                        vesselTBA.maxspeed = vesselTBA.speed;
-                        vesselTBA.currentformation = i;
-                        vesselTBA.isdead = false;
-                        vesselTBA.isplayer = false;
+                        vessel.crew = vessel.crewlimit;
+                        vessel.power = vessel.powerlimit;
+                        vessel.marines = vessel.marinelimit;
+                        vessel.hull = vessel.hulllimit;
+                        vessel.fields = vessel.fieldlimit;
+                        vessel.maxspeed = vessel.speed;
+                        vessel.currentformation = i;
+                        vessel.isdead = false;
+                        vessel.isplayer = false;
 
-                        System.out.println("{" + vesselTBA.name + "}" + " Has been added to " + formation.name);
-                        formation.ships.add(vesselTBA);
+                        System.out.println("{" + vessel.name + "}" + " Has been added to " + formation.name);
+                        formation.ships.add(vessel);
                         System.out.println(" Add more ships? (y/n)");
 
                         break;
