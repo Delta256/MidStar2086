@@ -18,7 +18,6 @@ public class Space {
 
         List<Formation> formations = new ArrayList<>();
         List<Vessel> VesselList = new ArrayList<>();
-        Random rand = new Random();
 
         int firstrun = 1;
         int playerchoice;
@@ -26,6 +25,8 @@ public class Space {
         Scanner sin = new Scanner(System.in);
 
         Vessel vessel;
+        
+        TextDemo.createAndShowGUI();
 
         while (firstrun == 1) {
             String text = fin.nextLine();

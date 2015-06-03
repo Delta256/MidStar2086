@@ -1,13 +1,4 @@
-
-import java.util.List;
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- *
  * @author pridc7921
  */
 public class Vessel {
@@ -33,11 +24,6 @@ public class Vessel {
     int maxspeed;
     int marineskill;
     
-    
-    
-    
-
-    
     //dynaminc traits
     int crewtasks = 0;
     int currentformation;
@@ -48,17 +34,17 @@ public class Vessel {
     int power;
     int fields; 
     int speed;
-    
     int enginedamage;
     int generatordamage;
     int specialdamage;
     int TSdamage;
     
+    //booleans
     boolean isplayer;
     boolean isdead;
     boolean opt3 = true;
     
-    Vessel DeepCopy(){
+    Vessel DeepCopy(){ //DeepCopy, so ships have unique stats
         Vessel vessel = new Vessel();
         vessel.ORFaction = ORFaction;
         vessel.beams = beams;
@@ -86,10 +72,6 @@ public class Vessel {
         vessel.maxspeed = maxspeed;
         vessel.marineskill = marineskill;
         vessel.marinetype = marinetype;
-        
-                
-        
-        
         return vessel;
     }
 }
