@@ -27,16 +27,24 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */ 
+ */
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;
 import javax.swing.*;
 
 public class TextDemo extends JPanel implements ActionListener {
-    protected JTextField textField;
-    protected JTextArea textArea;
+
+    static JTextField textField;
+    static JTextArea textArea;
+    public static final ArrayList<String> holder = new ArrayList<>();
     private final static String newline = "\n";
+    public static String text;
+
+    static void setText(int fields) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     public TextDemo() {
         super(new GridBagLayout());
@@ -63,10 +71,13 @@ public class TextDemo extends JPanel implements ActionListener {
 
     public void actionPerformed(ActionEvent evt) {
         String text = textField.getText();
-        textArea.append(text + newline);
+        setText(text);
+        synchronized (holder) {
+            holder.add(text);
+            holder.notify();
+        }
         //textField.selectAll();
         textField.setText("");
-        textArea.append("Hello"+ newline);
 
         //Make sure the new text is visible, even if there
         //was a selection in the text area.
@@ -74,9 +85,8 @@ public class TextDemo extends JPanel implements ActionListener {
     }
 
     /**
-     * Create the GUI and show it.  For thread safety,
-     * this method should be invoked from the
-     * event dispatch thread.
+     * Create the GUI and show it. For thread safety, this method should be
+     * invoked from the event dispatch thread.
      */
     public static void createAndShowGUI() {
         //Create and set up the window.
@@ -89,5 +99,27 @@ public class TextDemo extends JPanel implements ActionListener {
         //Display the window.
         frame.pack();
         frame.setVisible(true);
+    }
+
+    public static void setText(String text) {
+        textArea.append(text + newline);
+    }
+
+    public static void clearText() {
+        textArea.setText("");
+    }
+
+    public static void Hold() throws InterruptedException {
+        synchronized (TextDemo.holder) {
+            while (holder.isEmpty()) {
+                holder.wait();
+            }
+            String nextstring = holder.remove(0);
+        }
+    }
+    
+    public static String returntext() {
+        text = textField.getText();
+        return text;
     }
 }
