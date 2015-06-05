@@ -4,40 +4,40 @@
 public class Vessel {
     
     //Text-y stuff
-    String name;
-    String ORFaction;
-    String marinetype;
+    String sName;
+    String sORFaction;
+    String sMarinetype;
     
     
     //static traits
-    int faction;
-    int hulllimit;
-    int crewlimit;
-    int marinelimit;
-    int powerlimit;
-    int powergen;
-    int fieldlimit;
-    int beams;
-    int rails;    
-    int subweapons;
-    int cost;
-    int maxspeed;
-    int marineskill;
+    int nFaction;
+    int nHulllimit;
+    int nCrewlimit;
+    int nMarinelimit;
+    int nPowerlimit;
+    int nPowergen;
+    int nFieldlimit;
+    int nBeams;
+    int nRails;    
+    int nSubweapons;
+    int nCost;
+    int nMaxspeed;
+    int nMarineskill;
     
     //dynaminc traits
-    int crewtasks = 0;
-    int currentformation;
-    int requisition = -1;
-    int hull;
-    int crew;
-    int marines; 
-    int power;
-    int fields; 
-    int speed;
-    int enginedamage;
-    int generatordamage;
-    int specialdamage;
-    int TSdamage;
+    int nCrewtasks = 0;
+    int nCurrentformation;
+    int nRequisition = -1;
+    int nHull;
+    int nCrew;
+    int nMarines; 
+    int nPower;
+    int nFields; 
+    int nSpeed;
+    int nEnginedamage;
+    int nGeneratordamage;
+    int nSpecialdamage;
+    int nTSdamage;
     
     //booleans
     boolean isplayer;
@@ -46,32 +46,32 @@ public class Vessel {
     
     Vessel DeepCopy(){ //DeepCopy, so ships have unique stats
         Vessel vessel = new Vessel();
-        vessel.ORFaction = ORFaction;
-        vessel.beams = beams;
-        vessel.crew = crew;
-        vessel.crewlimit = crewlimit;
-        vessel.currentformation = currentformation;
-        vessel.faction = faction;
-        vessel.fieldlimit = fieldlimit;
-        vessel.fields = fields;
-        vessel.hull = hull;
-        vessel.hulllimit = hulllimit;
+        vessel.sORFaction = sORFaction;
+        vessel.nBeams = nBeams;
+        vessel.nCrew = nCrew;
+        vessel.nCrewlimit = nCrewlimit;
+        vessel.nCurrentformation = nCurrentformation;
+        vessel.nFaction = nFaction;
+        vessel.nFieldlimit = nFieldlimit;
+        vessel.nFields = nFields;
+        vessel.nHull = nHull;
+        vessel.nHulllimit = nHulllimit;
         vessel.isdead = isdead;
         vessel.isplayer = isplayer;
-        vessel.marinelimit = marinelimit;
-        vessel.marines = marines;
-        vessel.name = name;
-        vessel.power = power;
-        vessel.powergen = powergen;
-        vessel.powerlimit = powerlimit;
-        vessel.rails = rails;
-        vessel.requisition = requisition;
-        vessel.speed = speed;
-        vessel.subweapons = subweapons;
-        vessel.cost = cost;
-        vessel.maxspeed = maxspeed;
-        vessel.marineskill = marineskill;
-        vessel.marinetype = marinetype;
+        vessel.nMarinelimit = nMarinelimit;
+        vessel.nMarines = nMarines;
+        vessel.sName = sName;
+        vessel.nPower = nPower;
+        vessel.nPowergen = nPowergen;
+        vessel.nPowerlimit = nPowerlimit;
+        vessel.nRails = nRails;
+        vessel.nRequisition = nRequisition;
+        vessel.nSpeed = nSpeed;
+        vessel.nSubweapons = nSubweapons;
+        vessel.nCost = nCost;
+        vessel.nMaxspeed = nMaxspeed;
+        vessel.nMarineskill = nMarineskill;
+        vessel.sMarinetype = sMarinetype;
         return vessel;
     }
 }
