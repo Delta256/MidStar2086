@@ -34,7 +34,7 @@ import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
 
-public class TextDemo extends JPanel implements ActionListener {
+public class TextIO extends JPanel implements ActionListener {
 
     static JTextField textField;
     static JTextArea textArea;
@@ -46,7 +46,7 @@ public class TextDemo extends JPanel implements ActionListener {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public TextDemo() {
+    public TextIO() {
         super(new GridBagLayout());
 
         textField = new JTextField(40);
@@ -94,7 +94,7 @@ public class TextDemo extends JPanel implements ActionListener {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Add contents to the window.
-        frame.add(new TextDemo());
+        frame.add(new TextIO());
 
         //Display the window.
         frame.pack();
@@ -110,7 +110,7 @@ public class TextDemo extends JPanel implements ActionListener {
     }
 
     public static void Hold() throws InterruptedException {
-        synchronized (TextDemo.holder) {
+        synchronized (TextIO.holder) {
             while (holder.isEmpty()) {
                 holder.wait();
             }

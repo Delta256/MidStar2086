@@ -24,7 +24,7 @@ public class Space {
         Scanner fin = new Scanner(new FileReader("shiptypes.mid"));
         Scanner sin = new Scanner(System.in);
         Vessel vessel;
-        TextDemo.createAndShowGUI();
+        TextIO.createAndShowGUI();
 
         while (nFirstrun == 1) {
             String text = fin.nextLine();
@@ -57,14 +57,14 @@ public class Space {
             VesselList.add(vessel);
         }
 
-        TextDemo.setText("Create formations? (y/n)");
+        TextIO.setText("Create formations? (y/n)");
 
         Loop:
         {
             while (true) {
 
-                TextDemo.Hold();
-                switch (TextDemo.returntext()) {
+                TextIO.Hold();
+                switch (TextIO.returntext()) {
 
 
                     case "n":
@@ -74,27 +74,27 @@ public class Space {
                         Formation formation = new Formation();
 
 
-                        TextDemo.setText("Set name:");
+                        TextIO.setText("Set name:");
 
 
-                        formation.name = TextDemo.returntext();
-                        TextDemo.Hold();
+                        formation.name = TextIO.returntext();
+                        TextIO.Hold();
 
                         formations.add(formation);
-                        TextDemo.setText("Create another formation?[y/n]");
+                        TextIO.setText("Create another formation?[y/n]");
 
                         break;
                 }
             }
         }
 
-        TextDemo.setText("Add vessels?");
+        TextIO.setText("Add vessels?");
 
         Loop:
         {
             while (true) {
-                TextDemo.Hold();
-                switch (TextDemo.returntext()) {
+                TextIO.Hold();
+                switch (TextIO.returntext()) {
 
                     case "n":
                         break Loop;
@@ -108,13 +108,13 @@ public class Space {
 
                             formation = formations.get(i);
 
-                            TextDemo.setText(i + "{" + formation.name + "}");
+                            TextIO.setText(i + "{" + formation.name + "}");
                         }
 
-                        TextDemo.setText("Choose formation to add ships to:");
+                        TextIO.setText("Choose formation to add ships to:");
 
-                        TextDemo.Hold();
-                        i = Integer.parseInt(TextDemo.returntext());
+                        TextIO.Hold();
+                        i = Integer.parseInt(TextIO.returntext());
                         
 
                         formation = formations.get(i);
@@ -124,13 +124,13 @@ public class Space {
 
                             vessel = VesselList.get(i);
 
-                            TextDemo.setText(i + "{" + vessel.sName + "} Faction:" + "[" + vessel.sORFaction + "]" + " Crew Compliment " + vessel.nCrewlimit + " Max Velocity(in open space):" + vessel.nSpeed);
+                            TextIO.setText(i + "{" + vessel.sName + "} Faction:" + "[" + vessel.sORFaction + "]" + " Crew Compliment " + vessel.nCrewlimit + " Max Velocity(in open space):" + vessel.nSpeed);
                         }
 
-                        TextDemo.setText("Choose vessel");
+                        TextIO.setText("Choose vessel");
 
-                        TextDemo.Hold();
-                        i = Integer.parseInt(TextDemo.returntext());
+                        TextIO.Hold();
+                        i = Integer.parseInt(TextIO.returntext());
 
 
                         //Vessel vessel;
@@ -147,20 +147,20 @@ public class Space {
                         vessel.isdead = false;
                         vessel.isplayer = false;
 
-                        TextDemo.setText("{" + vessel.sName + "}" + " Has been added to " + formation.name);
+                        TextIO.setText("{" + vessel.sName + "}" + " Has been added to " + formation.name);
                         formation.ships.add(vessel);
-                        TextDemo.setText(" Add more ships? (y/n)");
+                        TextIO.setText(" Add more ships? (y/n)");
 
                         break;
                 }
             }
         }
-        TextDemo.setText("Select player-controlled? (y/n)");
+        TextIO.setText("Select player-controlled? (y/n)");
         Loop:
         {
             for (;;) {
-                TextDemo.Hold();
-                switch (TextDemo.returntext()) {
+                TextIO.Hold();
+                switch (TextIO.returntext()) {
 
                     case "n":
                         break Loop;
@@ -170,21 +170,21 @@ public class Space {
                         //Will be used later to define player-controlled ships for psudo-multiplayer.
                         listFNV(formations);
 
-                        TextDemo.setText("Choose your formation");
+                        TextIO.setText("Choose your formation");
                         
-                        TextDemo.Hold();
-                        int i = Integer.parseInt(TextDemo.returntext());
+                        TextIO.Hold();
+                        int i = Integer.parseInt(TextIO.returntext());
 
-                        TextDemo.setText("Choose your ship");
+                        TextIO.setText("Choose your ship");
                         
-                        TextDemo.Hold();
-                        int j = Integer.parseInt(TextDemo.returntext());
+                        TextIO.Hold();
+                        int j = Integer.parseInt(TextIO.returntext());
                         
 
-                        TextDemo.setText(formations.get(i).ships.get(j).sName);
+                        TextIO.setText(formations.get(i).ships.get(j).sName);
                         formations.get(i).ships.get(j).isplayer = true;
-                        TextDemo.setText("Readying vessel");
-                        TextDemo.setText("Any more? (y/n)");
+                        TextIO.setText("Readying vessel");
+                        TextIO.setText("Any more? (y/n)");
                         break;
                 }
             }
@@ -213,29 +213,29 @@ public class Space {
                                 break;
                             }
 
-                            TextDemo.setText(playervessel.sName + " " + (l + 1) + " Formation " + "{" + playervessel.nCurrentformation + "}");
-                            TextDemo.setText("");
-                            TextDemo.setText("Input Commands:");
-                            TextDemo.setText("");
-                            TextDemo.setText("[1] Ship Status");
+                            TextIO.setText(playervessel.sName + " " + (l + 1) + " Formation " + "{" + playervessel.nCurrentformation + "}");
+                            TextIO.setText("");
+                            TextIO.setText("Input Commands:");
+                            TextIO.setText("");
+                            TextIO.setText("[1] Ship Status");
 
-                            TextDemo.setText("[2] Hostile actions");
-                            TextDemo.setText("[4] Crew management");
-                            TextDemo.setText("[5] Boarding actions");
+                            TextIO.setText("[2] Hostile actions");
+                            TextIO.setText("[4] Crew management");
+                            TextIO.setText("[5] Boarding actions");
 
                             if (playervessel.opt3 == true) {
-                                TextDemo.setText("[3] Power Management");
+                                TextIO.setText("[3] Power Management");
                             }
 
-                            TextDemo.Hold();
-                            nPlayerchoice = Integer.parseInt(TextDemo.returntext());
+                            TextIO.Hold();
+                            nPlayerchoice = Integer.parseInt(TextIO.returntext());
                             
 
                             if (nPlayerchoice == 1) { //Status report
-                                TextDemo.setText("");
+                                TextIO.setText("");
                                 printVessel(playervessel);
-                                TextDemo.setText("");
-                                if (TextDemo.returntext() != null) {
+                                TextIO.setText("");
+                                if (TextIO.returntext() != null) {
                                     break;
                                 }
                             }
@@ -245,9 +245,9 @@ public class Space {
                                 Vessel targetvessel = choosevessel(formations);
                                 attack(playervessel, targetvessel);
 
-                                TextDemo.setText("Press Enter to continue");// End turn, generate power
-                                TextDemo.Hold();
-                                if (TextDemo.returntext() != null) {
+                                TextIO.setText("Press Enter to continue");// End turn, generate power
+                                TextIO.Hold();
+                                if (TextIO.returntext() != null) {
                                     endturn(playervessel);
                                     break;
                                 }
@@ -267,8 +267,8 @@ public class Space {
                                     boarding(playervessel, targetvessel);
 
                                 } else {
-                                    TextDemo.setText("Shields on both ships must be lowered first");
-                                    TextDemo.returntext();
+                                    TextIO.setText("Shields on both ships must be lowered first");
+                                    TextIO.returntext();
                                 }
                             }
                         }
@@ -281,31 +281,31 @@ public class Space {
     public static void boarding(Vessel playervessel, Vessel targetvessel) {
         if (targetvessel.nFields == 0) {
 
-            TextDemo.setText("Your ship has " + playervessel.nMarines + " " + playervessel.sMarinetype + " on standby");
-            TextDemo.setText("Enemy ship has " + targetvessel.nMarines + " " + targetvessel.sMarinetype + " onboard");
+            TextIO.setText("Your ship has " + playervessel.nMarines + " " + playervessel.sMarinetype + " on standby");
+            TextIO.setText("Enemy ship has " + targetvessel.nMarines + " " + targetvessel.sMarinetype + " onboard");
 
 
         } else {
-            TextDemo.setText("Shields on both ships must be lowered first");
+            TextIO.setText("Shields on both ships must be lowered first");
         }
     }
 
     public static void crewmanage(Vessel playervessel) throws InterruptedException {
         Scanner sin = new Scanner(System.in);
         int pref;
-        TextDemo.setText("Choose crew priority");
-        TextDemo.setText("[0] Repairs");
-        TextDemo.setText("[1] Weapon systems");
-        TextDemo.setText("[2] Power Generation");
-        TextDemo.setText("[3] Field maintainence");
-        TextDemo.setText("[4] Sekret Powar");
+        TextIO.setText("Choose crew priority");
+        TextIO.setText("[0] Repairs");
+        TextIO.setText("[1] Weapon systems");
+        TextIO.setText("[2] Power Generation");
+        TextIO.setText("[3] Field maintainence");
+        TextIO.setText("[4] Sekret Powar");
 
-        TextDemo.Hold();
-        pref = Integer.parseInt(TextDemo.returntext());
+        TextIO.Hold();
+        pref = Integer.parseInt(TextIO.returntext());
         if (pref >= 4) {
             playervessel.nCrewtasks = pref;
         } else {
-            TextDemo.setText("BORK BORK BORK!");
+            TextIO.setText("BORK BORK BORK!");
         }
     }
 
@@ -313,13 +313,13 @@ public class Space {
         Scanner sin = new Scanner(System.in);
         Vessel targetvessel;
         printformations(formations);
-        TextDemo.setText("Choose target formation");
-        TextDemo.Hold();
-        int i = Integer.parseInt(TextDemo.returntext());
+        TextIO.setText("Choose target formation");
+        TextIO.Hold();
+        int i = Integer.parseInt(TextIO.returntext());
         printvessels(formations.get(i));
-        TextDemo.setText("Choose target ship");
-        TextDemo.Hold();
-        int j = Integer.parseInt(TextDemo.returntext());
+        TextIO.setText("Choose target ship");
+        TextIO.Hold();
+        int j = Integer.parseInt(TextIO.returntext());
         targetvessel = formations.get(i).ships.get(j);
         return (targetvessel);
     }
@@ -336,35 +336,35 @@ public class Space {
                 playervessel.nHull = playervessel.nHulllimit;
             }
         }
-        TextDemo.clearText();
+        TextIO.clearText();
     }
 
     public static void listFNV(List<Formation> formations) {
 
         for (int i = 0; i < formations.size(); i++) {
 
-            TextDemo.setText("{" + i + "} " + formations.get(i).name);
+            TextIO.setText("{" + i + "} " + formations.get(i).name);
 
             for (int j = 0; j < formations.get(i).ships.size(); j++) {
 
-                TextDemo.setText("    " + "{" + j + "} " + formations.get(i).ships.get(j).sName + " ");
+                TextIO.setText("    " + "{" + j + "} " + formations.get(i).ships.get(j).sName + " ");
                 double nPercentage = (((double) formations.get(i).ships.get(j).nHull / (double) formations.get(i).ships.get(j).nHulllimit) * 100);
                 if (nPercentage >= 90) {
-                    TextDemo.setText("        (Undamaged)");
+                    TextIO.setText("        (Undamaged)");
                 } else if (nPercentage >= 70) {
-                    TextDemo.setText("            Slight damage");
+                    TextIO.setText("            Slight damage");
                 } else if (nPercentage >= 50) {
-                    TextDemo.setText("            Moderate damage");
+                    TextIO.setText("            Moderate damage");
                 } else if (nPercentage >= 30) {
-                    TextDemo.setText("            Heavy Damage");
+                    TextIO.setText("            Heavy Damage");
                 } else if (nPercentage >= 10) {
-                    TextDemo.setText("            Critical Damage");
+                    TextIO.setText("            Critical Damage");
                 } else if (nPercentage >= 0) {
-                    TextDemo.setText("            ##Disabled##");
+                    TextIO.setText("            ##Disabled##");
                 }
-                TextDemo.setText(" |Fields:" + formations.get(i).ships.get(j).nFields + "|");
-                TextDemo.setText(" |Velocity:" + formations.get(i).ships.get(j).nSpeed + "|");
-                TextDemo.setText("");
+                TextIO.setText(" |Fields:" + formations.get(i).ships.get(j).nFields + "|");
+                TextIO.setText(" |Velocity:" + formations.get(i).ships.get(j).nSpeed + "|");
+                TextIO.setText("");
 
             }
         }
@@ -374,7 +374,7 @@ public class Space {
 
         for (int i = 0; i < formations.size(); i++) {
 
-            TextDemo.setText("{" + i + "} " + formations.get(i).name);
+            TextIO.setText("{" + i + "} " + formations.get(i).name);
 
         }
     }
@@ -386,16 +386,16 @@ public class Space {
         int nPlayerchoice;
         while (true) {
 
-            TextDemo.setText("Available power: " + playervessel.nPower + "/" + playervessel.nPowerlimit);
-            TextDemo.setText("Field Integrity: " + playervessel.nFields + "/" + playervessel.nFieldlimit);
-            TextDemo.setText("Structural Integrity: " + playervessel.nHull + "/" + playervessel.nHulllimit);
-            TextDemo.setText("");
-            TextDemo.setText("Input Commands:");
-            TextDemo.setText("");
-            TextDemo.setText("[1] Divert power to fields" + " COST:" + shieldcost + "|" + "GENERATES:" + shieldgen);
-            TextDemo.setText("[2] Drop fields");
-            TextDemo.Hold();
-            nPlayerchoice = Integer.parseInt(TextDemo.returntext());
+            TextIO.setText("Available power: " + playervessel.nPower + "/" + playervessel.nPowerlimit);
+            TextIO.setText("Field Integrity: " + playervessel.nFields + "/" + playervessel.nFieldlimit);
+            TextIO.setText("Structural Integrity: " + playervessel.nHull + "/" + playervessel.nHulllimit);
+            TextIO.setText("");
+            TextIO.setText("Input Commands:");
+            TextIO.setText("");
+            TextIO.setText("[1] Divert power to fields" + " COST:" + shieldcost + "|" + "GENERATES:" + shieldgen);
+            TextIO.setText("[2] Drop fields");
+            TextIO.Hold();
+            nPlayerchoice = Integer.parseInt(TextIO.returntext());
             if (nPlayerchoice == 1 && playervessel.nPower >= shieldcost) {
 
                 playervessel.nFields = (int) (playervessel.nFields + shieldgen);
@@ -420,26 +420,26 @@ public class Space {
 
         for (int i = 0; i < formation.ships.size(); i++) {
 
-            TextDemo.setText("{" + i + "} " + formation.ships.get(i).sName);
-            TextDemo.setText("     Current Velocity: " + formation.ships.get(i).nSpeed);
-            TextDemo.setText("     Fields: " + formation.ships.get(i).nFields);
+            TextIO.setText("{" + i + "} " + formation.ships.get(i).sName);
+            TextIO.setText("     Current Velocity: " + formation.ships.get(i).nSpeed);
+            TextIO.setText("     Fields: " + formation.ships.get(i).nFields);
 
 
         }
     }
 
     public static void printVessel(Vessel playervessel) {
-        TextDemo.setText("SITREP");
-        TextDemo.setText(playervessel.sName + ":");
-        TextDemo.setText("Faction: " + playervessel.sORFaction);
-        TextDemo.setText("Crewmembers onboard: " + playervessel.nCrew);
-        TextDemo.setText("Boarding teams: " + playervessel.nMarines);
-        TextDemo.setText("Structural integrity: " + playervessel.nHull + "/" + playervessel.nHulllimit);
-        TextDemo.setText("Field integrity: " + playervessel.nFields + "/" + playervessel.nFieldlimit);
-        TextDemo.setText("Power available: " + playervessel.nPower + "/" + playervessel.nPowerlimit + " Generating:" + playervessel.nPowergen);
-        TextDemo.setText(playervessel.nCurrentformation);
-        TextDemo.setText("Resources available: " + playervessel.nRequisition);
-        TextDemo.setText("");
+        TextIO.setText("SITREP");
+        TextIO.setText(playervessel.sName + ":");
+        TextIO.setText("Faction: " + playervessel.sORFaction);
+        TextIO.setText("Crewmembers onboard: " + playervessel.nCrew);
+        TextIO.setText("Boarding teams: " + playervessel.nMarines);
+        TextIO.setText("Structural integrity: " + playervessel.nHull + "/" + playervessel.nHulllimit);
+        TextIO.setText("Field integrity: " + playervessel.nFields + "/" + playervessel.nFieldlimit);
+        TextIO.setText("Power available: " + playervessel.nPower + "/" + playervessel.nPowerlimit + " Generating:" + playervessel.nPowergen);
+        TextIO.setText(playervessel.nCurrentformation);
+        TextIO.setText("Resources available: " + playervessel.nRequisition);
+        TextIO.setText("");
     }
 
     public static void attack(Vessel playervessel, Vessel targetvessel) throws InterruptedException {
@@ -453,29 +453,29 @@ public class Space {
         if (playervessel.isplayer = true) {
             while (true) {
 
-                TextDemo.setText("Attack " + targetvessel.sName + " with");
+                TextIO.setText("Attack " + targetvessel.sName + " with");
 
                 //Flavour text
                 if (playervessel.nFaction == 1) { //Earth forces
 
-                    TextDemo.setText("[1] Beamgun turrets" + "(" + playervessel.nBeams + ")" + " POWER NEEDED: " + playervessel.nBeams * 40);
-                    TextDemo.setText("[2] Railguns" + "(" + playervessel.nRails + ")" + " POWER NEEDED: " + playervessel.nRails * 35);
-                    TextDemo.setText("[3] Torpedoes" + "(" + playervessel.nSubweapons + ")" + " POWER NEEDED: " + playervessel.nSubweapons * 50);
+                    TextIO.setText("[1] Beamgun turrets" + "(" + playervessel.nBeams + ")" + " POWER NEEDED: " + playervessel.nBeams * 40);
+                    TextIO.setText("[2] Railguns" + "(" + playervessel.nRails + ")" + " POWER NEEDED: " + playervessel.nRails * 35);
+                    TextIO.setText("[3] Torpedoes" + "(" + playervessel.nSubweapons + ")" + " POWER NEEDED: " + playervessel.nSubweapons * 50);
                 } else if (playervessel.nFaction == 2) { //Midyian Sovereignty
 
-                    TextDemo.setText("[1] Phase Cannons" + "(" + playervessel.nBeams + ")" + " POWER NEEDED: " + playervessel.nBeams * 40);
-                    TextDemo.setText("[2] Phaserail Turrets" + "(" + playervessel.nRails + ")" + " POWER NEEDED: " + playervessel.nRails * 35);
-                    TextDemo.setText("[3] Beamgun Coil" + "(" + playervessel.nSubweapons + ")" + " POWER NEEDED: " + playervessel.nSubweapons * 50);
+                    TextIO.setText("[1] Phase Cannons" + "(" + playervessel.nBeams + ")" + " POWER NEEDED: " + playervessel.nBeams * 40);
+                    TextIO.setText("[2] Phaserail Turrets" + "(" + playervessel.nRails + ")" + " POWER NEEDED: " + playervessel.nRails * 35);
+                    TextIO.setText("[3] Beamgun Coil" + "(" + playervessel.nSubweapons + ")" + " POWER NEEDED: " + playervessel.nSubweapons * 50);
                 } else if (playervessel.nFaction == 3) { //Midyian Conglomerate
 
-                    TextDemo.setText("[1] Pulse Hardpoints" + "(" + playervessel.nBeams + ")" + " POWER NEEDED: " + playervessel.nBeams * 40);
-                    TextDemo.setText("[2] Mass Cannons" + "(" + playervessel.nRails + ")" + " POWER NEEDED: " + playervessel.nRails * 35);
-                    TextDemo.setText("[3] Rocket arrays" + "(" + playervessel.nSubweapons + ")" + " POWER NEEDED: " + playervessel.nSubweapons * 50);
+                    TextIO.setText("[1] Pulse Hardpoints" + "(" + playervessel.nBeams + ")" + " POWER NEEDED: " + playervessel.nBeams * 40);
+                    TextIO.setText("[2] Mass Cannons" + "(" + playervessel.nRails + ")" + " POWER NEEDED: " + playervessel.nRails * 35);
+                    TextIO.setText("[3] Rocket arrays" + "(" + playervessel.nSubweapons + ")" + " POWER NEEDED: " + playervessel.nSubweapons * 50);
                 }
 
-                TextDemo.setText("Power Available: " + playervessel.nPower);
-                TextDemo.Hold();
-                nPlayerchoice = Integer.parseInt(TextDemo.returntext());
+                TextIO.setText("Power Available: " + playervessel.nPower);
+                TextIO.Hold();
+                nPlayerchoice = Integer.parseInt(TextIO.returntext());
 
                 if (nPlayerchoice == 1) {//Beams are consistant, and do bonus vs. hull.
 
@@ -493,15 +493,15 @@ public class Space {
                         int nPercent = (int) (nBase * 0.25);
                         double ndRandplusminus = (1 - (rand.nextDouble() * 2)); //Determines whether damage will be + or - 25% of nBase
                         nDmg = nBase + (int) (nPercent * ndRandplusminus);
-                        TextDemo.setText("Damage: " + nDmg);
+                        TextIO.setText("Damage: " + nDmg);
                         if (playervessel.nCrewtasks == 1) {
                             nDmg *= 1.25;
-                            TextDemo.setText("NewDamage: " + nDmg);
+                            TextIO.setText("NewDamage: " + nDmg);
                         }
 
                         if (targetvessel.nFields <= nDmg) {//Checks if shields can be brought down
 
-                            TextDemo.setText(targetvessel.nFields);
+                            TextIO.setText(targetvessel.nFields);
                             nDmg = nDmg - targetvessel.nFields;
                             targetvessel.nFields = 0;
 
@@ -510,25 +510,25 @@ public class Space {
                                 nDmg = 0;
                                 targetvessel.nHull = 0;
                                 targetvessel.isdead = true;
-                                TextDemo.setText("Target Neutralised");
+                                TextIO.setText("Target Neutralised");
 
                             } else if (targetvessel.nHull >= nDmg) { //Damages hull
 
-                                TextDemo.setText(targetvessel.nHull);
+                                TextIO.setText(targetvessel.nHull);
                                 targetvessel.nHull = (int) (targetvessel.nHull - (nDmg * 1.10));
-                                TextDemo.setText(targetvessel.nHull);
+                                TextIO.setText(targetvessel.nHull);
 
-                                TextDemo.setText("We've hit their hull.");
+                                TextIO.setText("We've hit their hull.");
 
 
                             }
                         } else if (targetvessel.nFields >= nDmg) { //Does shield damage
 
-                            TextDemo.setText(targetvessel.nFields);
+                            TextIO.setText(targetvessel.nFields);
                             targetvessel.nFields = targetvessel.nFields - nDmg;
-                            TextDemo.setText(targetvessel.nFields);
+                            TextIO.setText(targetvessel.nFields);
 
-                            TextDemo.setText("We've hit their energy barriers.");
+                            TextIO.setText("We've hit their energy barriers.");
                         }
                         break;
                     }
@@ -550,15 +550,15 @@ public class Space {
                         int nPercent = (int) (nBase * 0.30);
                         double dRandplusminus = (1 - (rand.nextDouble() * 2)); //Determines whether damage will be + or - 25% of nBase
                         nDmg = nBase + (int) (nPercent * dRandplusminus);
-                        TextDemo.setText("Damage: " + nDmg);
+                        TextIO.setText("Damage: " + nDmg);
                         if (playervessel.nCrewtasks == 1) {
                             nDmg *= 1.25;
-                            TextDemo.setText("NewDamage: " + nDmg);
+                            TextIO.setText("NewDamage: " + nDmg);
                         }
 
                         if (targetvessel.nFields <= nDmg) {//Checks if shields can be brought down
 
-                            TextDemo.setText(targetvessel.nFields);
+                            TextIO.setText(targetvessel.nFields);
                             nDmg = nDmg - targetvessel.nFields;
                             targetvessel.nFields = 0;
 
@@ -567,25 +567,25 @@ public class Space {
                                 nDmg = 0;
                                 targetvessel.nHull = 0;
                                 targetvessel.isdead = true;
-                                TextDemo.setText("Target Neutralised");
+                                TextIO.setText("Target Neutralised");
 
                             } else if (targetvessel.nHull >= nDmg) { //Damages hull
 
-                                TextDemo.setText(targetvessel.nHull);
+                                TextIO.setText(targetvessel.nHull);
                                 targetvessel.nHull = (int) (targetvessel.nHull - (nDmg * 1.10));
-                                TextDemo.setText(targetvessel.nHull);
+                                TextIO.setText(targetvessel.nHull);
 
-                                TextDemo.setText("We've hit their hull.");
+                                TextIO.setText("We've hit their hull.");
 
 
                             }
                         } else if (targetvessel.nFields >= nDmg) { //Does shield damage
 
-                            TextDemo.setText(targetvessel.nFields);
+                            TextIO.setText(targetvessel.nFields);
                             targetvessel.nFields = targetvessel.nFields - nDmg;
-                            TextDemo.setText(targetvessel.nFields);
+                            TextIO.setText(targetvessel.nFields);
 
-                            TextDemo.setText("We've hit their energy barriers.");
+                            TextIO.setText("We've hit their energy barriers.");
 
                         }
                         break;
@@ -609,16 +609,16 @@ public class Space {
                         int nPercent = (int) (nBase * 0.50);
                         double dRandplusminus = (1 - (rand.nextDouble() * 2)); //Determines whether damage will be + or - 25% of nBase
                         nDmg = nBase + (int) (nPercent * dRandplusminus);
-                        TextDemo.setText("Damage: " + nDmg);
+                        TextIO.setText("Damage: " + nDmg);
                         if (playervessel.nCrewtasks == 1) {
                             nDmg *= 1.25;
-                            TextDemo.setText("NewDamage: " + nDmg);
+                            TextIO.setText("NewDamage: " + nDmg);
                         }
 
 
                         if (targetvessel.nFields <= nDmg) {//Checks if shields can be brought down
 
-                            TextDemo.setText(targetvessel.nFields);
+                            TextIO.setText(targetvessel.nFields);
                             nDmg = nDmg - targetvessel.nFields;
                             targetvessel.nFields = 0;
 
@@ -627,25 +627,25 @@ public class Space {
                                 nDmg = 0;
                                 targetvessel.nHull = 0;
                                 targetvessel.isdead = true;
-                                TextDemo.setText("Target Neutralised");
+                                TextIO.setText("Target Neutralised");
 
                             } else if (targetvessel.nHull >= nDmg) { //Damages hull
 
-                                TextDemo.setText(targetvessel.nHull);
+                                TextIO.setText(targetvessel.nHull);
                                 targetvessel.nHull = (int) (targetvessel.nHull - (nDmg * 1.10));
-                                TextDemo.setText(targetvessel.nHull);
+                                TextIO.setText(targetvessel.nHull);
 
-                                TextDemo.setText("We've hit their hull.");
+                                TextIO.setText("We've hit their hull.");
 
 
                             }
                         } else if (targetvessel.nFields >= nDmg) { //Does shield damage
 
-                            TextDemo.setText(targetvessel.nFields);
+                            TextIO.setText(targetvessel.nFields);
                             targetvessel.nFields = targetvessel.nFields - nDmg;
-                            TextDemo.setText(targetvessel.nFields);
+                            TextIO.setText(targetvessel.nFields);
 
-                            TextDemo.setText("We've hit their energy barriers.");
+                            TextIO.setText("We've hit their energy barriers.");
 
                         }
                         break;
