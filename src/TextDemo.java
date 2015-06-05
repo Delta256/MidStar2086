@@ -43,16 +43,16 @@ public class TextDemo extends JPanel implements ActionListener {
     public static String text;
 
     static void setText(int fields) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public TextDemo() {
         super(new GridBagLayout());
 
-        textField = new JTextField(20);
+        textField = new JTextField(40);
         textField.addActionListener(this);
 
-        textArea = new JTextArea(5, 20);
+        textArea = new JTextArea(40, 40);
         textArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(textArea);
 

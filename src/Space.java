@@ -19,21 +19,19 @@ public class Space {
         List<Formation> formations = new ArrayList<>();
         List<Vessel> VesselList = new ArrayList<>();
 
-        int firstrun = 1;
-        int playerchoice;
+        int nFirstrun = 1;
+        int nPlayerchoice;
         Scanner fin = new Scanner(new FileReader("shiptypes.mid"));
         Scanner sin = new Scanner(System.in);
-
         Vessel vessel;
-        
         TextDemo.createAndShowGUI();
 
-        while (firstrun == 1) {
+        while (nFirstrun == 1) {
             String text = fin.nextLine();
 
             if (text.equals(".")) { //Break loop when EoF is reached
 
-                firstrun = 0; //Stops the game from trying to load vessels 
+                nFirstrun = 0; //Stops the game from trying to load vessels 
                 break;        //after it has done so already
 
             }
@@ -64,8 +62,10 @@ public class Space {
         Loop:
         {
             while (true) {
+
                 TextDemo.Hold();
                 switch (TextDemo.returntext()) {
+
 
                     case "n":
                         break Loop;
@@ -73,9 +73,12 @@ public class Space {
                     case "y":
                         Formation formation = new Formation();
 
+
                         TextDemo.setText("Set name:");
-                        TextDemo.Hold();
+
+
                         formation.name = TextDemo.returntext();
+                        TextDemo.Hold();
 
                         formations.add(formation);
                         TextDemo.setText("Create another formation?[y/n]");
@@ -109,11 +112,11 @@ public class Space {
                         }
 
                         TextDemo.setText("Choose formation to add ships to:");
-                        
+
                         TextDemo.Hold();
                         i = Integer.parseInt(TextDemo.returntext());
                         
-                        
+
                         formation = formations.get(i);
 
                         //Print lists of vessels
@@ -125,10 +128,11 @@ public class Space {
                         }
 
                         TextDemo.setText("Choose vessel");
-                        
+
                         TextDemo.Hold();
                         i = Integer.parseInt(TextDemo.returntext());
-                        
+
+
                         //Vessel vessel;
                         vessel = VesselList.get(i).DeepCopy();
 
@@ -167,12 +171,16 @@ public class Space {
                         listFNV(formations);
 
                         TextDemo.setText("Choose your formation");
+                        
                         TextDemo.Hold();
                         int i = Integer.parseInt(TextDemo.returntext());
 
                         TextDemo.setText("Choose your ship");
+                        
                         TextDemo.Hold();
                         int j = Integer.parseInt(TextDemo.returntext());
+                        
+
                         TextDemo.setText(formations.get(i).ships.get(j).name);
                         formations.get(i).ships.get(j).isplayer = true;
                         TextDemo.setText("Readying vessel");
@@ -219,37 +227,41 @@ public class Space {
                                 TextDemo.setText("[3] Power Management");
                             }
 
-                            playerchoice = Integer.parseInt(TextDemo.returntext());
+                            TextDemo.Hold();
+                            nPlayerchoice = Integer.parseInt(TextDemo.returntext());
+                            
 
-                            if (playerchoice == 1) { //Status report
+                            if (nPlayerchoice == 1) { //Status report
                                 TextDemo.setText("");
                                 printVessel(playervessel);
                                 TextDemo.setText("");
-                                TextDemo.setText("Press Enter when ready.");
-                                TextDemo.Hold();
+                                if (TextDemo.returntext() != null) {
+                                    break;
+                                }
                             }
 
-                            if (playerchoice == 2) { //Attack command
+                            if (nPlayerchoice == 2) { //Attack command
 
                                 Vessel targetvessel = choosevessel(formations);
                                 attack(playervessel, targetvessel);
 
                                 TextDemo.setText("Press Enter to continue");// End turn, generate power
+                                TextDemo.Hold();
                                 if (TextDemo.returntext() != null) {
                                     endturn(playervessel);
                                     break;
                                 }
                             }
 
-                            if (playerchoice == 3 && playervessel.opt3 == true) { //Energy stuff
+                            if (nPlayerchoice == 3 && playervessel.opt3 == true) { //Energy stuff
                                 fieldmanage(playervessel);
                             }
 
-                            if (playerchoice == 4) { //Crew prefs
+                            if (nPlayerchoice == 4) { //Crew prefs
                                 crewmanage(playervessel);
                             }
 
-                            if (playerchoice == 5) { //Boarding
+                            if (nPlayerchoice == 5) { //Boarding
                                 if (playervessel.fields == 0) {
                                     Vessel targetvessel = choosevessel(formations);
                                     boarding(playervessel, targetvessel);
@@ -268,17 +280,17 @@ public class Space {
 
     public static void boarding(Vessel playervessel, Vessel targetvessel) {
         if (targetvessel.fields == 0) {
-            
+
             TextDemo.setText("Your ship has " + playervessel.marines + " " + playervessel.marinetype + " on standby");
             TextDemo.setText("Enemy ship has " + targetvessel.marines + " " + targetvessel.marinetype + " onboard");
-        
-        
+
+
         } else {
             TextDemo.setText("Shields on both ships must be lowered first");
         }
     }
 
-    public static void crewmanage(Vessel playervessel) {
+    public static void crewmanage(Vessel playervessel) throws InterruptedException {
         Scanner sin = new Scanner(System.in);
         int pref;
         TextDemo.setText("Choose crew priority");
@@ -287,6 +299,8 @@ public class Space {
         TextDemo.setText("[2] Power Generation");
         TextDemo.setText("[3] Field maintainence");
         TextDemo.setText("[4] Sekret Powar");
+
+        TextDemo.Hold();
         pref = Integer.parseInt(TextDemo.returntext());
         if (pref >= 4) {
             playervessel.crewtasks = pref;
@@ -295,14 +309,16 @@ public class Space {
         }
     }
 
-    public static Vessel choosevessel(List<Formation> formations) {
+    public static Vessel choosevessel(List<Formation> formations) throws InterruptedException {
         Scanner sin = new Scanner(System.in);
         Vessel targetvessel;
         printformations(formations);
         TextDemo.setText("Choose target formation");
+        TextDemo.Hold();
         int i = Integer.parseInt(TextDemo.returntext());
         printvessels(formations.get(i));
         TextDemo.setText("Choose target ship");
+        TextDemo.Hold();
         int j = Integer.parseInt(TextDemo.returntext());
         targetvessel = formations.get(i).ships.get(j);
         return (targetvessel);
@@ -320,6 +336,7 @@ public class Space {
                 playervessel.hull = playervessel.hulllimit;
             }
         }
+        TextDemo.clearText();
     }
 
     public static void listFNV(List<Formation> formations) {
@@ -345,8 +362,8 @@ public class Space {
                 } else if (percentage >= 0) {
                     TextDemo.setText("            ##Disabled##");
                 }
-                TextDemo.setText(" |Fields:" + formations.get(i).ships.get(j).fields+"|");
-                TextDemo.setText(" |Velocity:" + formations.get(i).ships.get(j).speed+"|");
+                TextDemo.setText(" |Fields:" + formations.get(i).ships.get(j).fields + "|");
+                TextDemo.setText(" |Velocity:" + formations.get(i).ships.get(j).speed + "|");
                 TextDemo.setText("");
 
             }
@@ -362,11 +379,11 @@ public class Space {
         }
     }
 
-    public static void fieldmanage(Vessel playervessel) {
+    public static void fieldmanage(Vessel playervessel) throws InterruptedException {
         Scanner sin = new Scanner(System.in);
         double shieldgen = ((playervessel.powergen * 0.10) + (playervessel.crew * 2) + (playervessel.fieldlimit / 4));
         double shieldcost = shieldgen * 1.20;
-        int playerchoice;
+        int nPlayerchoice;
         while (true) {
 
             TextDemo.setText("Available power: " + playervessel.power + "/" + playervessel.powerlimit);
@@ -377,8 +394,9 @@ public class Space {
             TextDemo.setText("");
             TextDemo.setText("[1] Divert power to fields" + " COST:" + shieldcost + "|" + "GENERATES:" + shieldgen);
             TextDemo.setText("[2] Drop fields");
-            playerchoice = Integer.parseInt(TextDemo.returntext());
-            if (playerchoice == 1 && playervessel.power >= shieldcost) {
+            TextDemo.Hold();
+            nPlayerchoice = Integer.parseInt(TextDemo.returntext());
+            if (nPlayerchoice == 1 && playervessel.power >= shieldcost) {
 
                 playervessel.fields = (int) (playervessel.fields + shieldgen);
 
@@ -389,7 +407,7 @@ public class Space {
                 break;
             }
 
-            if (playerchoice == 2 && playervessel.power >= shieldcost) {
+            if (nPlayerchoice == 2 && playervessel.power >= shieldcost) {
                 playervessel.power = playervessel.power + playervessel.fields;
                 playervessel.fields = 0;
                 playervessel.opt3 = false;
@@ -405,11 +423,11 @@ public class Space {
             TextDemo.setText("{" + i + "} " + formation.ships.get(i).name);
             TextDemo.setText("     Current Velocity: " + formation.ships.get(i).speed);
             TextDemo.setText("     Fields: " + formation.ships.get(i).fields);
-            
+
 
         }
     }
-    
+
     public static void printVessel(Vessel playervessel) {
         TextDemo.setText("SITREP");
         TextDemo.setText(playervessel.name + ":");
@@ -424,9 +442,9 @@ public class Space {
         TextDemo.setText("");
     }
 
-    public static void attack(Vessel playervessel, Vessel targetvessel) {
+    public static void attack(Vessel playervessel, Vessel targetvessel) throws InterruptedException {
         Scanner sin = new Scanner(System.in);
-        int playerchoice;
+        int nPlayerchoice;
         int dmg;
         int powercost;
         Random rand = new Random();
@@ -456,9 +474,10 @@ public class Space {
                 }
 
                 TextDemo.setText("Power Available: " + playervessel.power);
-                playerchoice = Integer.parseInt(TextDemo.returntext());
+                TextDemo.Hold();
+                nPlayerchoice = Integer.parseInt(TextDemo.returntext());
 
-                if (playerchoice == 1) {//Beams are consistant, and do bonus vs. hull.
+                if (nPlayerchoice == 1) {//Beams are consistant, and do bonus vs. hull.
 
                     powercost = playervessel.beams * 40;
                     if (playervessel.crewtasks == 1) {
@@ -515,7 +534,7 @@ public class Space {
                     }
                 }
 
-                if (playerchoice == 2) {//Railguns are harder to predict...
+                if (nPlayerchoice == 2) {//Railguns are harder to predict...
 
                     powercost = playervessel.rails * 35;
                     if (playervessel.crewtasks == 1) {
@@ -574,7 +593,7 @@ public class Space {
                 }
 
 
-                if (playerchoice == 3) {//Subweapons are devestating...
+                if (nPlayerchoice == 3) {//Subweapons are devestating...
 
                     powercost = playervessel.subweapons * 60;
                     if (playervessel.crewtasks == 1) {
