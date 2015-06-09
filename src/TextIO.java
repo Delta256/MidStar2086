@@ -61,23 +61,23 @@ public class TextIO extends JPanel implements ActionListener {
         c.gridwidth = GridBagConstraints.REMAINDER;
 
         c.fill = GridBagConstraints.HORIZONTAL;
-        add(textField, c);
+        
 
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 1.0;
         c.weighty = 1.0;
         add(scrollPane, c);
+        add(textField, c);
     }
 
     public void actionPerformed(ActionEvent evt) {
         String text = textField.getText();
-        setText(text);
+        setTextNL(text);
         synchronized (holder) {
             holder.add(text);
             holder.notify();
         }
-        //textField.selectAll();
-        textField.setText("");
+        textField.selectAll();
 
         //Make sure the new text is visible, even if there
         //was a selection in the text area.
@@ -102,7 +102,13 @@ public class TextIO extends JPanel implements ActionListener {
     }
 
     public static void setText(String text) {
+        textArea.append(text);
+        textArea.setCaretPosition(textArea.getDocument().getLength());
+    }
+    
+    public static void setTextNL(String text) {
         textArea.append(text + newline);
+        textArea.setCaretPosition(textArea.getDocument().getLength());
     }
 
     public static void clearText() {
